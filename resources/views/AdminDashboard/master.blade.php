@@ -166,6 +166,27 @@
                     </li>
 
 
+                    <li class="header-menu">Vandor Section</li>
+
+                    <li class="sidebar-dropdown {{ Request::routeIs('VandorRreview') ? 'active' : '' }} {{ Request::routeIs('VandorViewInformation') ? 'active' : '' }} {{ Request::routeIs('VandorAdminApproveList') ? 'active' : '' }} {{ Request::routeIs('VandorPanel') ? 'active' : '' }} {{ Request::routeIs('VandorCategoryPermission') ? 'active' : '' }} ">
+                        <a href="#">
+                            <i class="icon-file-text"></i>
+                            <span class="menu-text">Vandor</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+
+                                <li>
+                                    <a class="{{ Request::routeIs('VandorViewInformation') ? 'current-page' : '' }} " href="{{route('VandorRreview')}}">Vandor Review</a>
+                                </li>
+
+                                <li>
+                                    <a class="{{ Request::routeIs('VandorAdminApproveList') ? 'current-page' : '' }} " href="{{route('VandorAdminApproveList')}}">Vandor Approve List</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
 
 
                     <li class="header-menu">Fontend Section</li>

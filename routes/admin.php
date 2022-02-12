@@ -32,6 +32,7 @@ use App\Http\Controllers\Admin\OurClientThinkOfUsController;
 use App\Http\Controllers\Admin\CustomerManageController;
 use App\Http\Controllers\Admin\MultipleUserSendMail;
 use App\Http\Controllers\Admin\SeoToolsController;
+use App\Http\Controllers\Admin\VandorReviewManageController;
 
 
 
@@ -297,6 +298,18 @@ Route::group(['middleware' => 'auth:admin'], function () {
     route::post('SuperAdmin/seo_tools_home_seo_update/seo-tools-home-edite',[SeoToolsController::class,'SeoToolsHomeEdite'])->name('SeoToolsHomeEdite');
     route::post('SuperAdmin/seo_tools_home_seo_update/seo-tools-shop-edite',[SeoToolsController::class,'SeoToolsShopEdite'])->name('SeoToolsShopEdite');
     route::post('SuperAdmin/seo_tools_home_seo_update/seo-tools-contact-edite',[SeoToolsController::class,'SeoToolsContactEdite'])->name('SeoToolsContactEdite');
+
+    //.................................Vandor Manage......................
+    route::get('SuperAdmin/Vandor/vandor-review',[VandorReviewManageController::class,'VandorRreview'])->name('VandorRreview');
+    route::get('SuperAdmin/Vandor/vandor-view-informtaion/{shop_id}',[VandorReviewManageController::class,'VandorViewInformation'])->name('VandorViewInformation');
+    route::get('SuperAdmin/Vandor/vandor-admin-approve/{shop_id}',[VandorReviewManageController::class,'VandorAdminApprove'])->name('VandorAdminApprove');
+    route::get('SuperAdmin/Vandor/vandor-admin-approve-list',[VandorReviewManageController::class,'VandorAdminApproveList'])->name('VandorAdminApproveList');
+
+    //.................................Vandor Panel Manage......................
+    route::get('SuperAdmin/Vandor/vandor-panel/{shop_id}',[VandorReviewManageController::class,'VandorPanel'])->name('VandorPanel');
+    route::get('SuperAdmin/Vandor/vandor-panel-category-permission/{shop_id}',[VandorReviewManageController::class,'VandorCategoryPermission'])->name('VandorCategoryPermission');
+    route::post('SuperAdmin/Vandor/vandor-panel-category-permission-submit',[VandorReviewManageController::class,'VandorCategoryPermissionSubmit'])->name('VandorCategoryPermissionSubmit');
+
 
 });
 Route::get('logout', [LoginController::class,'logout']);
