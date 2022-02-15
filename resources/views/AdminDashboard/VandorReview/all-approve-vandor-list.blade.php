@@ -56,8 +56,8 @@
                                 <div class="dropdown-menu">
                                     <a style="display: inherit;margin: 5px;border-radius:3px" href="{{route('VandorViewInformation',@$slider->shop_id)}}" class="btn btn-info btn-sm "><i class="fa fa-eye"></i> View Information</a>
                                     <a style="display: inherit;margin: 5px;border-radius:3px" href="{{route('VandorPanel',@$slider->shop_id)}}" class="btn btn-secondary btn-sm"><i class="fa fa-user"></i> Vandor Panel</a>
-                                    <a style="display: inherit;margin: 5px;border-radius:3px" href="" class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i> Details Add</a>
-
+                                    {{--<a style="display: inherit;margin: 5px;border-radius:3px" href="" class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i> Details Add</a>--}}
+                                    <a style="display: inherit;margin: 5px;border-radius:3px" href="{{route('VandorStatusPanding',[@$slider->shop_id,$slider->id])}}" class="btn btn-warning btn-sm "><i class="fa fa-arrow-down"></i> Panding</a>
                                 </div>
                             </div>
                         </td>

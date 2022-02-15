@@ -162,41 +162,135 @@
                         </a>
                     </li>
 
-                        <li class="sidebar-dropdown">
+                        <li class="sidebar-dropdown {{ Request::routeIs('VandorCategoryManage') ? 'active' : '' }}"  >
                             <a href="#">
-                                <i class="icon-layout"></i>
-                                <span class="menu-text">Menu Builder</span>
+                                <i class="fa fa-list"></i>
+                                <span class="menu-text">Category</span>
                             </a>
                             <div class="sidebar-submenu">
                                 <ul>
+
                                     <li>
-                                        <a href="">Create Menu</a>
-                                    </li>
-                                    <li>
-                                        <a href="">All Menu</a>
+                                        <a href="{{route('VandorCategoryManage')}}">All Category</a>
                                     </li>
 
                                 </ul>
                             </div>
                         </li>
 
-                        <li class="sidebar-dropdown">
-                            <a href="#">
-                                <i class="icon-layout"></i>
-                                <span class="menu-text">Page Builder</span>
-                            </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="">Create Page</a>
-                                    </li>
-                                    <li>
-                                        <a href="">All Page</a>
-                                    </li>
 
-                                </ul>
-                            </div>
-                        </li>
+                    <li class="sidebar-dropdown {{ Request::routeIs('VandorProductManage') ? 'active' : '' }} {{ Request::routeIs('VandorApproveProductList') ? 'active' : '' }} {{ Request::routeIs('VandorPandingProductList') ? 'active' : '' }} ">
+                        <a href="#">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="menu-text">Product Manage</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+
+                                <li>
+                                    <a href="{{route('VandorProductManage')}}">All Product</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{route('VandorApproveProductList')}}">Approve Product List</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{route('VandorPandingProductList')}}">Panding Product List</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="sidebar-dropdown {{ Request::routeIs('VandorOrderManage') ? 'active' : '' }} {{ Request::routeIs('VandorOrderManageAjax') ? 'active' : '' }} {{ Request::routeIs('VandorOrderDetails') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorOrderStatusPage') ? 'active' : '' }} {{ Request::routeIs('VandorOrderStatusApprove') ? 'active' : '' }} {{ Request::routeIs('VandorOrderStatusPanding') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorShippingStatusApprove') ? 'active' : '' }} {{ Request::routeIs('VandorShippingStatusPanding') ? 'active' : '' }} {{ Request::routeIs('VandorCompleteStatusApporve') ? 'active' : '' }}  "  >
+                        <a href="#">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="menu-text">Order Manage</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+
+                                <li>
+                                    <a href="{{route('VandorOrderManage')}}">All Order</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="header-menu">Inventory Section</li>
+
+                    <li class="sidebar-dropdown {{ Request::routeIs('Vandorpurshesadd') ? 'active' : '' }} {{ Request::routeIs('Vandorpurshesadd_view') ? 'active' : '' }} {{ Request::routeIs('Vandorpanding_purshes') ? 'active' : '' }}
+                    {{ Request::routeIs('Vandorpurshesadd_dailyreport') ? 'active' : '' }}"  >
+                        <a href="#">
+                            <i class="icon-circular-graph"></i>
+                            <span class="menu-text">Purchase Manage</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+
+                                <li>
+                                    <a href="{{route('Vandorpurshesadd')}}">Add Purchas</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{route('Vandorpurshesadd_view')}}">All Purchas</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{route('Vandorpanding_purshes')}}">All Panding Purchas</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{route('Vandorpurshesadd_dailyreport')}}">Daily Purchase Report</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="header-menu">REPORT SECTION</li>
+
+                    <li class="sidebar-dropdown {{ Request::routeIs('VandorReport_Genarator') ? 'active' : '' }}"  >
+                        <a href="#">
+                            <i class="icon-file-text"></i>
+                            <span class="menu-text">Sales Report</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+
+                                <li>
+                                    <a href="{{route('VandorReport_Genarator')}}">Selling Report</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="sidebar-dropdown {{ Request::routeIs('VandorStockGenaratorPage') ? 'active' : '' }} {{ Request::routeIs('VandorCategoryWiseStock') ? 'active' : '' }} {{ Request::routeIs('VandorStockGenaratorProductAjax') ? 'active' : '' }} {{ Request::routeIs('VandorProductWiseStockGenare') ? 'active' : '' }}"  >
+                        <a href="#">
+                            <i class="icon-file-text"></i>
+                            <span class="menu-text">Stock Report</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+
+                                <li>
+                                    <a href="{{route('VandorStockGenaratorPage')}}">Stock Report</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
 
                 </ul>
             </div>
@@ -242,6 +336,28 @@
                                     <span class="status busy"></span>
 									</span>
                             </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSettings">
+                                <div class="header-profile-actions">
+                                    <div class="header-user-profile">
+                                        <div class="header-user">
+                                            <img src="{{(@$info->profile)?url('upload/Vandor/Profile/'.$info->profile):asset('upload/Vandor/default.png')}}" alt="Admin Template">
+                                        </div>
+                                        <h5>Hello {{@$info->f_name}}</h5>
+                                        <p>{{@$info->shop_id}}</p>
+                                    </div>
+                                    {{--<a href=""><i class="icon-user1"></i> My Profile</a>--}}
+{{--                                    <a href="{{route('VandorProfile',Auth::guard('vandor')->user()->id)}}"><i class="icon-settings1"></i> Account Settings</a>--}}
+                                    <a href="{{route('logout')}}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i class="icon-log-out1"></i> Sign Out</a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                        <input type="hidden" value="{{Auth::guard('vandor')->user()->id}}" name="vandor_id">
+                                    </form>
+                                </div>
+                            </div>
+
+
 
                         </li>
 
@@ -328,7 +444,7 @@
                                     <div class="header-user">
                                         <img src="{{(@$info->profile)?url('upload/Vandor/Profile/'.$info->profile):asset('upload/Vandor/default.png')}}" alt="Admin Template">
                                     </div>
-                                    <h5>Hello {{@$info->f_name}}</h5>
+                                    <h5>Hello {{str_limit(@$info->f_name,10)}}</h5>
                                     <p>{{@$info->shop_id}}</p>
                                 </div>
                                 {{--<a href=""><i class="icon-user1"></i> My Profile</a>--}}
@@ -458,11 +574,12 @@
 
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 
 @yield('footer')
+@yield('vandor_footer')
 
 
 

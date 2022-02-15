@@ -23,6 +23,20 @@ class PaymentController extends Controller
     public function PaymentStore(Request $request){
 
 
+//        return $request->total_cart_amount;
+
+        $datass = Cart::content();
+        $arr=[];
+       foreach(@$datass as $key=>$da){
+           array_push($arr,$datass[$key]->options->shop_id);
+
+       }
+
+        $collection = collect($arr);
+        $arr = $collection->unique();
+
+
+
         $request->validate([
             'payment'=>'required',
             'billing_fname'=>'required',
@@ -34,7 +48,7 @@ class PaymentController extends Controller
             'billing_city_name'=>'required',
             'billing_zip_code'=>'required',
             'billing_address'=>'required',
-            'charge'=>'required'
+//            'charge'=>'required'
         ]);
 
 
@@ -123,6 +137,7 @@ class PaymentController extends Controller
 
         $orderid = rand(0000,9999);
         $orderStore =new Order();
+        $orderStore->shop_id = json_encode($arr);
         $orderStore->billing_id = Session::get('billing_id');
         $orderStore->payment_id = Session::get('payment_id');
         if(Session::has('customer_id')){
@@ -131,12 +146,13 @@ class PaymentController extends Controller
             $orderStore->user_id = $customer->id;
         }
 
-        $shipping_charge = str_replace(',','',$request->charge)-str_replace(',','',$request->total_cart_amount);
-        $shipping_name = ShippingCharage::where('amount',$shipping_charge)->first()->name;
+//        $shipping_charge = str_replace(',','',$request->charge)-str_replace(',','',$request->total_cart_amount);
+//        $shipping_name = ShippingCharage::where('amount',$shipping_charge)->first()->name;
         $orderStore->orderId = $orderid;
-        $orderStore->total_ammount =str_replace(',','',$request->charge);
-        $orderStore->shipment_name =$shipping_name;
-        $orderStore->shipment_amount =$shipping_charge;
+//        $orderStore->total_ammount =str_replace(',','',$request->charge);
+        $orderStore->total_ammount =str_replace(',','',$request->total_cart_amount);
+//        $orderStore->shipment_name =$shipping_name;
+//        $orderStore->shipment_amount =$shipping_charge;
         if(session()->has('coupon')) {
             $orderStore->coupon = session()->get('coupon')['name'];
         }else{
@@ -163,14 +179,16 @@ class PaymentController extends Controller
             }else{
                 $OrderDetials->user_id = Session::get('gest_customer_id');
             }
-            $OrderDetials->subtotal =$item->subtotal();
+            $OrderDetials->subtotal =str_replace(',','',$item->subtotal());
             $OrderDetials->size_id = '0';
             $OrderDetials->color_id = '0';
             $OrderDetials->product_price = $item->price;
             $OrderDetials->product_id = $item->id;
+            $OrderDetials->shop_id = $item->options->shop_id;
             $OrderDetials->qty = $item->qty;
             $OrderDetials->status = 1;
             $OrderDetials->save();
+
         }
 
         //...............Top Seller Product................
@@ -223,7 +241,6 @@ class PaymentController extends Controller
         Session::forget('show_order_section');
         Session::forget('gest_showsession');
         Session::forget('coupon');
-
 
 
         $noti = array(

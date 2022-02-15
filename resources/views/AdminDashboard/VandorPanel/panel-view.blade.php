@@ -101,7 +101,7 @@
                                                     <img style="height: 94px;width: 88px;" src="{{asset('upload/Vandor/cat_per.png')}}" alt="Doc Icon" />
                                                 </div>
                                                 <div class="doc-title">Category Permission</div>
-                                                <a href="{{route('VandorCategoryPermission',@$vandor->shop_id)}}" class="btn btn-white btn-lg">View</a>
+                                                <a href="{{route('VandorCategoryPermissionEs',@$vandor->shop_id)}}" class="btn btn-white btn-lg">View</a>
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -110,7 +110,18 @@
                                                     <img style="height: 94px;width: 88px;" src="{{asset('upload/Vandor/pro.png')}}" alt="Doc Icon" />
                                                 </div>
                                                 <div class="doc-title">Product Add</div>
-                                                <button class="btn btn-white btn-lg">view</button>
+                                                <a href="{{route('VandorPanelProductPage',@$vandor->shop_id)}}" class="btn btn-white btn-lg">view</a>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                            <div class="doc-block">
+                                                <div class="doc-icon">
+                                                    <img style="height: 94px;width: 88px;" src="{{asset('backend/amm.png')}}" alt="Doc Icon" />
+                                                </div>
+                                                <div class="doc-title">Payment Widrow</div>
+                                                <a href="{{route('VandorPanelPaymentWidrowPage',[@$vandor->shop_id,@$vandor->id])}}" class="btn btn-white btn-lg">view</a>
                                             </div>
                                         </div>
 

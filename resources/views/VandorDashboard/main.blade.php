@@ -53,137 +53,32 @@
     </div>
     <!-- Row end -->
 
-    <!-- Row start -->
+    <!---------Monthly And Yearly Income--------->
     <div class="row gutters">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title">Visitors</div>
+                    <div class="card-title" style="font-family: cursive;">Monthly Income</div>
                 </div>
                 <div class="card-body pt-0">
-                    <div id="visitors"></div>
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
         </div>
+
+        {{--<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">--}}
+            {{--<div class="card">--}}
+                {{--<div class="card-header">--}}
+                    {{--<div class="card-title" style="font-family: cursive;">Yearly Income</div>--}}
+                {{--</div>--}}
+                {{--<div class="card-body pt-0">--}}
+                    {{--<canvas id="YearlyChart"></canvas>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
     </div>
-    <!-- Row end -->
 
 
-    <!-- Row start -->
-    <div class="row gutters">
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Customers</div>
-                </div>
-                <div class="card-body">
-                    <div id="customers"></div>
-                    <!-- Row starts -->
-                    <div class="row gutters">
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <div class="info-stats3 shade-one-a">
-                                <i class="icon-opacity"></i>
-                                <h6>New</h6>
-                                <h3>450</h3>
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                            <div class="info-stats3 shade-one-b">
-                                <i class="icon-opacity"></i>
-                                <h6>Returned</h6>
-                                <h3>900</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Row end -->
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Deals</div>
-                </div>
-                <div class="card-body pt-0 pb-0">
-                    <div id="deals"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Logs</div>
-                </div>
-                <div class="card-body">
-                    <div class="customScroll5">
-                        <div class="activity-logs">
-                            <div class="activity-log-list">
-                                <div class="sts"></div>
-                                <div class="log">New item sold</div>
-                                <div class="log-time">10:10</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts"></div>
-                                <div class="log">Notification from bank</div>
-                                <div class="log-time">05:25</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts red"></div>
-                                <div class="log">Transaction success alert</div>
-                                <div class="log-time">09:45</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts orange"></div>
-                                <div class="log">Your item has been updated</div>
-                                <div class="log-time">06:50</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts"></div>
-                                <div class="log">New fffer</div>
-                                <div class="log-time">12:30</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts orange"></div>
-                                <div class="log">Item bought</div>
-                                <div class="log-time">04:22</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts"></div>
-                                <div class="log">New sale: Zyan Ferris</div>
-                                <div class="log-time">10:10</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts orange"></div>
-                                <div class="log">Order Received</div>
-                                <div class="log-time">12:55</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts"></div>
-                                <div class="log">Service information</div>
-                                <div class="log-time">09:12</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts"></div>
-                                <div class="log">Message from Reisnz</div>
-                                <div class="log-time">09:27</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts red"></div>
-                                <div class="log">New item sale: Ali Sayed</div>
-                                <div class="log-time">02:39</div>
-                            </div>
-                            <div class="activity-log-list">
-                                <div class="sts orange"></div>
-                                <div class="log">Product update</div>
-                                <div class="log-time">08:22</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Row end -->
 
 
 
@@ -367,6 +262,60 @@
         </div>
     </div>
     <!-- Row end -->
+
+@section('footer')
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['This Month', '1 Month ago', '2 Month Ago', '3 Month Ago', '4 Month Ago', '5 Month Ago','6 Month Ago','7 Month Ago','8 Month Ago','9 Month Ago','10 Month Ago','11 Month Ago'],
+                datasets: [{
+                    label: '# Month Income',
+                    data: [{{$this_month}}, {{$one_month_ago}},{{$two_month_ago}},{{@$three_month_ago}},{{$four_month_ago}},{{$five_month_ago}},{{@$six_month_ago}},{{@$seven_month_ago}},{{@$eight_month_ago}},{{@$nine_month_ago}},'{{@$ten_month_ago}}',{{@$eleven_month_ago}}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+    @endsection
 
 
 

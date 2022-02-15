@@ -296,49 +296,49 @@
                                                     <table class="table table-striped">
                                                         <tr>
                                                             <th>Subtotal :</th>
-                                                            <td>@if(\Illuminate\Support\Facades\Session::has('Total_Amount')) ৳{{\Illuminate\Support\Facades\Session::get('Total_Amount')}} @else ৳{{@$subtotal}} @endif</td>
+                                                            <td>@if(\Illuminate\Support\Facades\Session::has('Total_Amount'))    <input type="hidden" value="{{\Illuminate\Support\Facades\Session::get('Total_Amount')}}" name="total_cart_amount">  ৳{{\Illuminate\Support\Facades\Session::get('Total_Amount')}} @else  <input type="hidden" value="{{@$subtotal}}" name="total_cart_amount"> ৳{{@$subtotal}} @endif</td>
                                                         </tr>
 
-                                                        @foreach(@$charge as $key=>$char)
-                                                         <tr>
-                                                             <th>{{@$char->name}} (৳{{@$char->amount}}) :</th>
+                                                        {{--@foreach(@$charge as $key=>$char)--}}
+                                                         {{--<tr>--}}
+                                                             {{--<th>{{@$char->name}} (৳{{@$char->amount}}) :</th>--}}
 
-                                                             @if(\Illuminate\Support\Facades\Session::has('Total_Amount'))
+                                                             {{--@if(\Illuminate\Support\Facades\Session::has('Total_Amount'))--}}
 
-                                                             <td>
-                                                                 <input type="hidden" value="{{@$char->name}}" name="shipment_name">
-                                                                 <input type="hidden" value="{{@$char->amount}}" name="shipment_amount">
-                                                                 <input type="hidden" value="{{\Illuminate\Support\Facades\Session::get('Total_Amount')}}" name="total_cart_amount">
-                                                                 <input type="radio"  class="@error('charge') is-invalid @enderror" value="{{@$char->amount+str_replace(',','',\Illuminate\Support\Facades\Session::get('Total_Amount'))}}" name="charge" >
-                                                                 <span>৳{{@$char->amount}}+{{\Illuminate\Support\Facades\Session::get('Total_Amount')}} = ৳{{@$char->amount+str_replace(',','',\Illuminate\Support\Facades\Session::get('Total_Amount'))}}</span>
+                                                             {{--<td>--}}
+                                                                 {{--<input type="hidden" value="{{@$char->name}}" name="shipment_name">--}}
+                                                                 {{--<input type="hidden" value="{{@$char->amount}}" name="shipment_amount">--}}
+                                                                 {{--<input type="hidden" value="{{\Illuminate\Support\Facades\Session::get('Total_Amount')}}" name="total_cart_amount">--}}
+                                                                 {{--<input type="radio"  class="@error('charge') is-invalid @enderror" value="{{@$char->amount+str_replace(',','',\Illuminate\Support\Facades\Session::get('Total_Amount'))}}" name="charge" >--}}
+                                                                 {{--<span>৳{{@$char->amount}}+{{\Illuminate\Support\Facades\Session::get('Total_Amount')}} = ৳{{@$char->amount+str_replace(',','',\Illuminate\Support\Facades\Session::get('Total_Amount'))}}</span>--}}
 
-                                                                 @error('charge')
-                                                                 <span style="color:red" alert="role">
-                                                                   <strong>{{$message}}</strong>
-                                                                 </span>
-                                                                 @enderror
-                                                             </td>
-                                                             @else
+                                                                 {{--@error('charge')--}}
+                                                                 {{--<span style="color:red" alert="role">--}}
+                                                                   {{--<strong>{{$message}}</strong>--}}
+                                                                 {{--</span>--}}
+                                                                 {{--@enderror--}}
+                                                             {{--</td>--}}
+                                                             {{--@else--}}
 
-                                                                 <td>
-                                                                     <input type="hidden" value="{{@$char->name}}" name="shipment_name">
-                                                                     <input type="hidden" value="{{@$char->amount}}" name="shipment_amount">
-                                                                     <input type="hidden" value="{{@$subtotal}}" name="total_cart_amount">
-                                                                     <input type="radio" class="@error('charge') is-invalid @enderror" value="{{@$char->amount+str_replace(',','',$subtotal)}}" name="charge" >
-                                                                     <span>৳{{@$char->amount}}+{{@$subtotal}} = ৳{{@$char->amount+str_replace(',','',@$subtotal)}}</span>
+                                                                 {{--<td>--}}
+                                                                     {{--<input type="hidden" value="{{@$char->name}}" name="shipment_name">--}}
+                                                                     {{--<input type="hidden" value="{{@$char->amount}}" name="shipment_amount">--}}
+                                                                     {{--<input type="hidden" value="{{@$subtotal}}" name="total_cart_amount">--}}
+                                                                     {{--<input type="radio" class="@error('charge') is-invalid @enderror" value="{{@$char->amount+str_replace(',','',$subtotal)}}" name="charge" >--}}
+                                                                     {{--<span>৳{{@$char->amount}}+{{@$subtotal}} = ৳{{@$char->amount+str_replace(',','',@$subtotal)}}</span>--}}
 
-                                                                     @error('charge')
-                                                                     <span style="color:red" alert="role">
-                                                                   <strong>{{$message}}</strong>
-                                                                 </span>
-                                                                     @enderror
-                                                                 </td>
+                                                                     {{--@error('charge')--}}
+                                                                     {{--<span style="color:red" alert="role">--}}
+                                                                   {{--<strong>{{$message}}</strong>--}}
+                                                                 {{--</span>--}}
+                                                                     {{--@enderror--}}
+                                                                 {{--</td>--}}
 
-                                                             @endif
+                                                             {{--@endif--}}
 
 
-                                                         </tr>
-                                                        @endforeach
+                                                         {{--</tr>--}}
+                                                        {{--@endforeach--}}
                                                     </table>
                                               {{--<ul>--}}
 

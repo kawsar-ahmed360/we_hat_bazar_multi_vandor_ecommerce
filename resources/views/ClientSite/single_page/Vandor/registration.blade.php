@@ -28,7 +28,7 @@
             </div>
         @endif
         <div class="container" style="border: 1px solid silver;padding-bottom: 20px;margin-top: 20px;">
-            <form action="{{route('StoreVandorRegisterForm')}}" method="POST">
+            <form action="{{route('StoreVandorRegisterForm')}}" method="POST" enctype="multipart/form-data">
                 @csrf
             <div class="row" style="margin-top: 20px">
                <div class="col-md-12">
@@ -144,7 +144,7 @@
 
                 <div class="col-md-6">
                     <label for="">Confirm Password</label>
-                    <input type="text" class="form-control" name="confirmed" placeholder="confirmed password">
+                    <input type="text" class="form-control" name="password_confirmation" placeholder="confirmed password">
                 </div>
 
                 <div class="col-md-12">

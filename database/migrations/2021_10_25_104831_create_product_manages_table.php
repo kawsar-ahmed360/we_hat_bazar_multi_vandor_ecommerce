@@ -33,6 +33,7 @@ class CreateProductManagesTable extends Migration
             $table->string('status')->nullable();
             $table->string('image')->nullable();
             $table->string('shop_id')->nullable();
+            $table->string('inc_commission_price')->nullable();
             $table->string('shop_name')->nullable();
             $table->text('meta_title')->nullable();
             $table->text('meta_des')->nullable();

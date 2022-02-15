@@ -2,6 +2,7 @@
 
 namespace App\Models\Client;
 
+use App\Models\Admin\ProductManage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,4 +32,6 @@ class Order extends Model
     public function BillingInfo(){
         return $this->belongsTo(BillingShipping::class,'billing_id');
     }
+
+
 }

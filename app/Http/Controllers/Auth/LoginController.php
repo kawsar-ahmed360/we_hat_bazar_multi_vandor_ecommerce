@@ -144,12 +144,13 @@ class LoginController extends Controller
         $request->validate([
             'f_name' => ['required', 'string', 'max:255'],
 //             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8','confirmed'],
             'phone' => ['required'],
             'city' => ['required'],
             'street_address' => ['required'],
             'zip' => ['required'],
             'shop_name' => ['required'],
+            'shop_image' => ['required'],
 
         ]);
 
@@ -175,7 +176,7 @@ class LoginController extends Controller
         $store->after_hash_passowrd = $request->password;
         $store->email = $request->email;
         $store->password = Hash::make($request->password);
-        $store->save();
+
 
         if($request->hasFile('profile')){
             $profile = $request->file('profile');
@@ -196,10 +197,12 @@ class LoginController extends Controller
         if($request->hasFile('shop_banner')){
             $shopbanner = $request->file('shop_banner');
             $fullshopbanner = time().'.'.$shopbanner->getClientOriginalExtension();
-            Image::make($request->shop_image)->resize(1200,500)->save('upload/Vandor/shop_image/'.$fullshopbanner);
+            Image::make($request->shop_image)->resize(1200,500)->save('upload/Vandor/shop_banner/'.$fullshopbanner);
             $store->shop_banner = $fullshopbanner;
             $store->save();
         }
+
+        $store->save();
 
        return $this->VandorLogin($request);
 

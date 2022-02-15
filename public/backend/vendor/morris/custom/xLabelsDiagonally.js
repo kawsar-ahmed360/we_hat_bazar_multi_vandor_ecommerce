@@ -15,8 +15,8 @@ var day_data = [
 	{"period": "2017-09-18", "licensed": 4, "Nework": 3},
 	{"period": "2017-09-17", "licensed": 7, "Nework": 7},
 	{"period": "2017-09-16", "licensed": 8, "Nework": 2},
-	{"period": "2017-09-15", "licensed": 9, "Nework": 3},
-	{"period": "2017-09-10", "licensed": 2, "Nework": 9}
+	{"period": "2017-09-15", "licensed": 23, "Nework": 13},
+	{"period": "2017-09-10", "licensed": 17, "Nework": 9}
 ];
 Morris.Bar({
 	element: 'xLabelsDiagonally',

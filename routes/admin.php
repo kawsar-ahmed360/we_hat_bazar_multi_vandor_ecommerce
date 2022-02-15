@@ -302,13 +302,32 @@ Route::group(['middleware' => 'auth:admin'], function () {
     //.................................Vandor Manage......................
     route::get('SuperAdmin/Vandor/vandor-review',[VandorReviewManageController::class,'VandorRreview'])->name('VandorRreview');
     route::get('SuperAdmin/Vandor/vandor-view-informtaion/{shop_id}',[VandorReviewManageController::class,'VandorViewInformation'])->name('VandorViewInformation');
+    route::get('SuperAdmin/Vandor/vandor-view-delete/{shop_id}/{id}',[VandorReviewManageController::class,'VandorViewDelete'])->name('VandorViewDelete');
+    route::get('SuperAdmin/Vandor/vandor-status-panding/{shop_id}/{id}',[VandorReviewManageController::class,'VandorStatusPanding'])->name('VandorStatusPanding');
     route::get('SuperAdmin/Vandor/vandor-admin-approve/{shop_id}',[VandorReviewManageController::class,'VandorAdminApprove'])->name('VandorAdminApprove');
     route::get('SuperAdmin/Vandor/vandor-admin-approve-list',[VandorReviewManageController::class,'VandorAdminApproveList'])->name('VandorAdminApproveList');
 
     //.................................Vandor Panel Manage......................
     route::get('SuperAdmin/Vandor/vandor-panel/{shop_id}',[VandorReviewManageController::class,'VandorPanel'])->name('VandorPanel');
-    route::get('SuperAdmin/Vandor/vandor-panel-category-permission/{shop_id}',[VandorReviewManageController::class,'VandorCategoryPermission'])->name('VandorCategoryPermission');
+    route::get('SuperAdmin/Vandor/vandor-panel-category-permission_es/{shop_id}',[VandorReviewManageController::class,'VandorCategoryPermissionEs'])->name('VandorCategoryPermissionEs');
     route::post('SuperAdmin/Vandor/vandor-panel-category-permission-submit',[VandorReviewManageController::class,'VandorCategoryPermissionSubmit'])->name('VandorCategoryPermissionSubmit');
+
+    //...............................Vandor Panel Product View.......................
+    route::get('SuperAdmin/Vandor/vandor-panel-product-page/{shop_page}',[VandorReviewManageController::class,'VandorPanelProductPage'])->name('VandorPanelProductPage');
+    route::get('SuperAdmin/Vandor/vandor-panel-product-add/{shop_page}',[VandorReviewManageController::class,'VandorPanelProductAdd'])->name('VandorPanelProductAdd');
+    route::post('SuperAdmin/Vandor/vandor-panel-product-store',[VandorReviewManageController::class,'VandorPanelProductStore'])->name('VandorPanelProductStore');
+    route::get('SuperAdmin/Vandor/vandor-panel-product-all/{shop_id}',[VandorReviewManageController::class,'VandorPanelProductAll'])->name('VandorPanelProductAll');
+    route::get('SuperAdmin/Vandor/vandor-panel-product-edit/{id}',[VandorReviewManageController::class,'VandorPanelProductEdit'])->name('VandorPanelProductEdit');
+    route::post('SuperAdmin/Vandor/vandor-panel-product-update',[VandorReviewManageController::class,'VandorPanelProductUpdate'])->name('VandorPanelProductUpdate');
+    route::get('SuperAdmin/Vandor/vandor-panel-product-delete/{id}',[VandorReviewManageController::class,'VandorPanelProductDelete'])->name('VandorPanelProductDelete');
+    route::get('SuperAdmin/Vandor/vandor-panel-product-add-more/{id}',[VandorReviewManageController::class,'VandorPanelProductAddMore'])->name('VandorPanelProductAddMore');
+    route::post('SuperAdmin/Vandor/vandor-panel-product-add-more-update',[VandorReviewManageController::class,'VandorPanelProductAddMoreUpdate'])->name('VandorPanelProductAddMoreUpdate');
+    route::get('SuperAdmin/Vandor/vandor-panel-product-discount/{id}',[VandorReviewManageController::class,'VandorPanelProductDiscount'])->name('VandorPanelProductDiscount');
+    route::post('SuperAdmin/Vandor/vandor-panel-product-discount-post',[VandorReviewManageController::class,'VandorPanelProductDiscountPost'])->name('VandorPanelProductDiscountPost');
+
+
+    //-----------------------------Vandor Widrow Payment System-----------------------------
+    route::get('SuperAdmin/Vandor/vandor-panel-widrow-page/{shop_page}/{id}',[VandorReviewManageController::class,'VandorPanelPaymentWidrowPage'])->name('VandorPanelPaymentWidrowPage');
 
 
 });

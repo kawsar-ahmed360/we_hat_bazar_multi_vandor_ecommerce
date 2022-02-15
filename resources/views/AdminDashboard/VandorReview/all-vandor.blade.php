@@ -54,6 +54,8 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     <a style="display: inherit;margin: 5px;border-radius:3px" href="{{route('VandorViewInformation',@$slider->shop_id)}}" class="btn btn-info btn-sm "><i class="fa fa-eye"></i> View Information</a>
+                                    <a style="display: inherit;margin: 5px;border-radius:3px" href="{{route('VandorViewDelete',[@$slider->shop_id,$slider->id])}}" class="btn btn-danger btn-sm "><i class="fa fa-trash"></i> Delete</a>
+
 
 
                                 </div>

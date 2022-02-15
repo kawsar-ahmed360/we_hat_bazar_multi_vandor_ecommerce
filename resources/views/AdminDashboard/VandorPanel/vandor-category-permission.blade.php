@@ -111,7 +111,7 @@
 
                                         @foreach(@$category as $key=>$cat)
                                         <div style="display: flex;" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                            <input style="height: 30px;width: 19px;" @foreach(@$permission_category as $key=>$per) {{(@$cat->id==@$per)?'checked':''}} @endforeach type="checkbox" value="{{@$cat->id}}" name="cat_id[]"> <span style="padding-left: 6px;font-size: 18px;padding-top: 3px;font-family: emoji;">{{@$cat->category_name}}</span>
+                                            <input style="height: 30px;width: 19px;" @if(@$permission_category!=null) @foreach(@$permission_category as $key=>$per) {{(@$cat->id==@$per)?'checked':''}} @endforeach @else @endif type="checkbox" value="{{@$cat->id}}" name="cat_id[]"> <span style="padding-left: 6px;font-size: 18px;padding-top: 3px;font-family: emoji;">{{@$cat->category_name}}</span>
                                         </div>
 
                                         @endforeach

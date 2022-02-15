@@ -82,6 +82,7 @@ class PurshasController extends Controller
 
     public function panding_purshes(){
 
+
         $data['all'] = purshes::OrderBy('date','desc')->where('status','0')->get();
         $data['logo'] = Setting::where('id','1')->first();
         $data['info'] = Admin::where('id',Auth::guard('admin')->user()->id)->first();

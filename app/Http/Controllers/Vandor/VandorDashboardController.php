@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Vandor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client\Order;
+use App\Models\Client\OrderDetail;
 use App\Models\Vandor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Image;
@@ -15,7 +18,91 @@ class VandorDashboardController extends Controller
         $id = Auth::guard('vandor')->user()->id;
         $data['info'] = Vandor::where('id',$id)->first();
 
-      return view('VandorDashboard.main',$data);
+
+
+        $currentDateTime = Carbon::now();
+        $data['this_month'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$currentDateTime)
+            ->sum('subtotal');
+
+        //........One Month Ago.....
+        $one_month_ago = Carbon::now()->subMonths(1);
+        $data['one_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$one_month_ago)
+            ->sum('subtotal');
+
+        $two_month_ago = Carbon::now()->subMonths(2);
+        $data['two_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$two_month_ago)
+            ->sum('subtotal');
+
+
+        $three_month_ago = Carbon::now()->subMonths(3);
+        $data['three_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$three_month_ago)
+            ->sum('subtotal');
+
+        $four_month_ago  = Carbon::now()->subMonths(4);
+        $data['four_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$four_month_ago)
+            ->sum('subtotal');
+
+
+        $five_month_ago  = Carbon::now()->subMonths(5);
+        $data['five_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$five_month_ago)
+            ->sum('subtotal');
+
+
+        $six_month_ago  = Carbon::now()->subMonths(6);
+        $data['six_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$six_month_ago)
+            ->sum('subtotal');
+
+
+        $seven_month_ago  = Carbon::now()->subMonths(7);
+        $data['seven_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$seven_month_ago)
+            ->sum('subtotal');
+
+        $eight_month_ago  = Carbon::now()->subMonths(8);
+        $data['eight_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$eight_month_ago)
+            ->sum('subtotal');
+
+
+        $nine_month_ago  = Carbon::now()->subMonths(9);
+        $data['nine_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$nine_month_ago)
+            ->sum('subtotal');
+
+        $ten_month_ago  = Carbon::now()->subMonths(10);
+        $data['ten_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$ten_month_ago)
+            ->sum('subtotal');
+
+        $eleven_month_ago  = Carbon::now()->subMonths(11);
+        $data['eleven_month_ago'] = OrderDetail::where('order_status','2')->where('shipping_status','2')
+            ->where('order_complete','2')->where('shop_id', $data['info']->shop_id)
+            ->whereMonth('created_at',$eleven_month_ago)
+            ->sum('subtotal');
+
+
+
+
+
+        return view('VandorDashboard.main',$data);
     }
 
     //------------------Profile Info Update----------------
@@ -65,7 +152,6 @@ class VandorDashboardController extends Controller
         }
 
         return redirect()->back();
-
 
     }
 }

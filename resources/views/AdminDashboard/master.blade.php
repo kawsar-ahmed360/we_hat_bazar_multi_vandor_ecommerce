@@ -168,7 +168,13 @@
 
                     <li class="header-menu">Vandor Section</li>
 
-                    <li class="sidebar-dropdown {{ Request::routeIs('VandorRreview') ? 'active' : '' }} {{ Request::routeIs('VandorViewInformation') ? 'active' : '' }} {{ Request::routeIs('VandorAdminApproveList') ? 'active' : '' }} {{ Request::routeIs('VandorPanel') ? 'active' : '' }} {{ Request::routeIs('VandorCategoryPermission') ? 'active' : '' }} ">
+                    <li class="sidebar-dropdown {{ Request::routeIs('VandorRreview') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorViewInformation') ? 'active' : '' }} {{ Request::routeIs('VandorAdminApproveList') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorPanel') ? 'active' : '' }} {{ Request::routeIs('VandorCategoryPermissionEs') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorPanelProductPage') ? 'active' : '' }} {{ Request::routeIs('VandorPanelProductAdd') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorPanelProductAll') ? 'active' : '' }}  {{ Request::routeIs('VandorPanelProductEdit') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorPanelProductUpdate') ? 'active' : '' }} {{ Request::routeIs('VandorPanelProductAddMore') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorPanelProductAddMoreUpdate') ? 'active' : '' }} {{ Request::routeIs('VandorPanelProductDiscount') ? 'active' : '' }}">
                         <a href="#">
                             <i class="icon-file-text"></i>
                             <span class="menu-text">Vandor</span>

@@ -1,4 +1,5 @@
 @foreach(@$cart as $cart)
+
     @foreach(\App\Models\Admin\ProductManage::where('id',@$cart->id)->get() as $pro)
 
         <tr>

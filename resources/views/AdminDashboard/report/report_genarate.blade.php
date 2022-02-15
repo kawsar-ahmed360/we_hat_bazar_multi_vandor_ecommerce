@@ -1,6 +1,7 @@
 @extends('AdminDashboard.master')
 @section('title') Report Genarate Page @endsection
 @section('admin-content')
+
 <div class="row">
                             <div class="col-12">
                                 <div class="card">
