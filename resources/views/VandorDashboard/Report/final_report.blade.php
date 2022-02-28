@@ -91,10 +91,11 @@
                     </tbody>
 
                     <tr>
-
                         <td colspan="5" style="text-align: right;color:black;font-size: 20px;font-weight: bold;">Total Amount :- ${{ @$total }}</td>
                         <td colspan="5" style="font-weight: bold;color:green;font-size: 20px"></td>
                     </tr>
+
+
                 </table>
 
 

@@ -283,4 +283,22 @@ class VandorOrderManageController extends Controller
 
         return view('VandorDashboard.Order_Status_Mail.order_approve');
     }
+
+    //--------------------Order Status Check----------------
+    public function VandorMouseOverPreview(Request $request){
+
+        $order_id = $request->Order_Id;
+        $ShopId = $request->Shop_Id;
+        $id = Auth::guard('vandor')->user()->id;
+        $data['info'] = Vandor::where('id',$id)->first();
+        $shop_i = Vandor::where('id',$id)->first();
+        $shops_id = Vandor::where('id',$id)->first()->shop_id;
+
+        $data['order'] = Order::with('customer','payments')->where('id',$order_id)->where('shop_id', 'LIKE', "%$shops_id%")->first();
+        $data['order_details'] = OrderDetail::with('products')->where('order_id',$data['order']->id)->where('shop_id',$shops_id)->get();
+
+        return response()->json(['order'=>$data['order'],'order_details'=>$data['order_details']]);
+
+
+    }
 }

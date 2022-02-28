@@ -328,7 +328,12 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     //-----------------------------Vandor Widrow Payment System-----------------------------
     route::get('SuperAdmin/Vandor/vandor-panel-widrow-page/{shop_page}/{id}',[VandorReviewManageController::class,'VandorPanelPaymentWidrowPage'])->name('VandorPanelPaymentWidrowPage');
+    route::get('SuperAdmin/Vandor/vandor-panel-widrow-date-wise-report/',[VandorReviewManageController::class,'VandorPanelPaymentWidrowDateWiseReport'])->name('VandorPanelPaymentWidrowDateWiseReport');
+    route::get('SuperAdmin/Vandor/vandor-panel-withdraw-panding/{shop_id}/{id}',[VandorReviewManageController::class,'VandorPanelPaymentWithdrawPanding'])->name('VandorPanelPaymentWithdrawPanding');
 
+
+    //-----------------------------Vandor withdrown Panding Request-----------------------------
+    route::get('SuperAdmin/Vandor/vandor-panel-withdrown-panding-request-all/',[VandorReviewManageController::class,'VandorPanelPaymentWithdrownRequestAll'])->name('VandorPanelPaymentWithdrownRequestAll');
 
 });
 Route::get('logout', [LoginController::class,'logout']);

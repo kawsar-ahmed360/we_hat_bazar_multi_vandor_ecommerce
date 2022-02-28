@@ -519,15 +519,15 @@
                             <td data-label="Grand Total" class="tableitem">@if(@$payment!=null) {{@$payment->payment}} @else Null @endif</td>
                         </tr>
 
-                        <tr class="list-item ">
+                       {{-- <tr class="list-item ">
                             <th colspan="5" style="text-align: right;" class="tableitem">Coupon</th>
                             <td data-label="Grand Total" class="tableitem">{{@$order->coupon}}</td>
-                        </tr>
+                        </tr>--}}
 
-                        <tr class="list-item ">
-                            <th colspan="5" style="text-align: right;" class="tableitem">Shipping Charge </th>
-                            <td data-label="Grand Total" class="tableitem">@if(@$order->shipment_amount!=null) ${{@$order->shipment_amount}} @else Null @endif</td>
-                        </tr>
+                        {{--<tr class="list-item ">--}}
+                            {{--<th colspan="5" style="text-align: right;" class="tableitem">Shipping Charge </th>--}}
+                            {{--<td data-label="Grand Total" class="tableitem">@if(@$order->shipment_amount!=null) ${{@$order->shipment_amount}} @else Null @endif</td>--}}
+                        {{--</tr>--}}
 
                         <tr class="list-item ">
                             <th colspan="5" style="text-align: right;" class="tableitem">Shipping Name  </th>

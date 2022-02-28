@@ -136,6 +136,7 @@
             </nav>
 
         @else
+
         <nav id="sidebar" class="sidebar-wrapper">
         <!-- Sidebar brand start  -->
         <div class="sidebar-brand">
@@ -156,7 +157,7 @@
 
 
                     <li>
-                        <a href="{{route('home')}}">
+                        <a href="{{route('VandorDashobard')}}">
                             <i class="icon-devices_other"></i>
                             <span class="menu-text">Dashboards</span>
                         </a>
@@ -284,6 +285,34 @@
 
                                 <li>
                                     <a href="{{route('VandorStockGenaratorPage')}}">Stock Report</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="header-menu">Withdraw Section</li>
+
+                    <li class="sidebar-dropdown {{ Request::routeIs('VandorWithdraRequest') ? 'active' : '' }} {{ Request::routeIs('VandorWithdraPandingRequest') ? 'active' : '' }} {{ Request::routeIs('VandorWithdraApproveRequest') ? 'active' : '' }} ">
+                        <a href="#">
+                            <i class="">৳</i>
+                            <span class="menu-text">Withdraw</span>
+                        </a>
+                        <div class="sidebar-submenu">
+                            <ul>
+
+                                <li>
+                                    <a  class="{{ Request::routeIs('VandorWithdraRequest') ? 'active' : '' }}" href="{{route('VandorWithdraRequest')}}">Request Send</a>
+                                </li>
+
+
+                                <li>
+                                    <a href="{{route('VandorWithdraPandingRequest')}}">Panding Request</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{route('VandorWithdraApproveRequest')}}">Approve Request</a>
                                 </li>
 
                             </ul>

@@ -496,9 +496,16 @@
                             $oderDetai = \App\Models\Client\OrderDetail::where('order_id',$pri->id)->where('user_id',$pri->user_id)->get();
                             $payment= \App\Models\Client\Payment::where('id',$pri->payment_id)->where('user_id',$pri->user_id)->first();
                             $order= \App\Models\Client\Order::where('id',$pri->id)->where('user_id',$pri->user_id)->first();
+
+                            $total_amount = 0;
                         @endphp
 
                         @forelse($oderDetai as $pri)
+
+                            @php
+                                $total_amount+=(@$pri->qty*@$pri->product_price);
+                            @endphp
+
                             <tr class="list-item">
                                 <td data-label="Type" class="tableitem">{{@$pri->products['product_sku']}}</td>
                                 <td data-label="Description" class="tableitem">{{@$pri->products['product_name']}}</td>
@@ -519,15 +526,15 @@
                             <td data-label="Grand Total" class="tableitem">@if(@$payment!=null) {{@$payment->payment}} @else Null @endif</td>
                         </tr>
 
-                        <tr class="list-item ">
-                            <th colspan="5" style="text-align: right;" class="tableitem">Coupon</th>
-                            <td data-label="Grand Total" class="tableitem">{{@$order->coupon}}</td>
-                        </tr>
+                        {{--<tr class="list-item ">--}}
+                            {{--<th colspan="5" style="text-align: right;" class="tableitem">Coupon</th>--}}
+                            {{--<td data-label="Grand Total" class="tableitem">{{@$order->coupon}}</td>--}}
+                        {{--</tr>--}}
 
-                        <tr class="list-item ">
-                            <th colspan="5" style="text-align: right;" class="tableitem">Shipping Charge </th>
-                            <td data-label="Grand Total" class="tableitem">@if(@$order->shipment_amount!=null) ${{@$order->shipment_amount}} @else Null @endif</td>
-                        </tr>
+                        {{--<tr class="list-item ">--}}
+                            {{--<th colspan="5" style="text-align: right;" class="tableitem">Shipping Charge </th>--}}
+                            {{--<td data-label="Grand Total" class="tableitem">@if(@$order->shipment_amount!=null) ${{@$order->shipment_amount}} @else Null @endif</td>--}}
+                        {{--</tr>--}}
 
                         <tr class="list-item ">
                             <th colspan="5" style="text-align: right;" class="tableitem">Shipping Name  </th>
@@ -536,7 +543,7 @@
 
                         <tr class="list-item ">
                             <th colspan="5" style="text-align: right;" class="tableitem">Total Amount</th>
-                            <td data-label="Grand Total" class="tableitem">${{$order->total_ammount}}</td>
+                            <td data-label="Grand Total" class="tableitem">${{@$total_amount}}</td>
                         </tr>
                     </table>
                 </div><!--End Table-->

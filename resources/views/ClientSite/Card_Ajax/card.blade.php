@@ -45,48 +45,48 @@
 
 
 
-    <tr>
-        <td colspan="1"></td>
+    {{--<tr>--}}
+        {{--<td colspan="1"></td>--}}
 
-        <td colspan="4">
-            @if(Session::has('coupon'))
+        {{--<td colspan="4">--}}
+            {{--@if(Session::has('coupon'))--}}
 
-                <div>
-                    <p style="color:red;text-align:right"> Coupon Already Applied....</p>
-                </div>
-            @else
-            <form action="{{route('CouponApplay')}}" class="form-inline float-right" method="post">
-                @csrf
+                {{--<div>--}}
+                    {{--<p style="color:red;text-align:right"> Coupon Already Applied....</p>--}}
+                {{--</div>--}}
+            {{--@else--}}
+            {{--<form action="{{route('CouponApplay')}}" class="form-inline float-right" method="post">--}}
+                {{--@csrf--}}
 
-                <div class="form-group">
-                    <input type="text" placeholder="Enter discount code" name="coupon" class="form-control border-form-control form-control-sm">
-                </div>
-                &nbsp;
-                <button style="border: 0px;padding: 5px;border-radius: 5px 0px;background: #ff6d6d;color: white;width: 90px;background: #e562ff;" class="" type="submit">Apply</button>
-            </form>
-            @endif
-        </td>
+                {{--<div class="form-group">--}}
+                    {{--<input type="text" placeholder="Enter discount code" name="coupon" class="form-control border-form-control form-control-sm">--}}
+                {{--</div>--}}
+                {{--&nbsp;--}}
+                {{--<button style="border: 0px;padding: 5px;border-radius: 5px 0px;background: #ff6d6d;color: white;width: 90px;background: #e562ff;" class="" type="submit">Apply</button>--}}
+            {{--</form>--}}
+            {{--@endif--}}
+        {{--</td>--}}
 
-        @if(Session()->has('coupon'))
+        {{--@if(Session()->has('coupon'))--}}
 
-            @if(session()->get('coupon')['discount'] && session()->get('coupon')['name'])
-            <td colspan="2">
-               <strong> Coupon Name</strong>: {{session()->get('coupon')['name']}}<br>
-                <strong>Discount</strong> : ৳{{session()->get('coupon')['discount']}}
-            </td>
-                @else
-                @endif
+            {{--@if(session()->get('coupon')['discount'] && session()->get('coupon')['name'])--}}
+            {{--<td colspan="2">--}}
+               {{--<strong> Coupon Name</strong>: {{session()->get('coupon')['name']}}<br>--}}
+                {{--<strong>Discount</strong> : ৳{{session()->get('coupon')['discount']}}--}}
+            {{--</td>--}}
+                {{--@else--}}
+                {{--@endif--}}
 
-            @else
-            <td colspan="2">Discount : ৳0 </td>
-        @endif
+            {{--@else--}}
+            {{--<td colspan="2">Discount : ৳0 </td>--}}
+        {{--@endif--}}
 
 
-    </tr>
+    {{--</tr>--}}
 
     <tr>
         <td colspan="2"></td>
-        <td class="text-right" colspan="3">Total products Subtotal</td>
+        <td class="text-right" colspan="3"><strong>SubTotal</strong></td>
         @if(session()->has('coupon'))
             @if(session()->get('coupon')['discount'])
             <td colspan="2">৳{{str_replace(',','',@$total)-session()->get('coupon')['discount']}}.00 </td>

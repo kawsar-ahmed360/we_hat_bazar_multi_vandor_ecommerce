@@ -138,12 +138,12 @@
 
 <div class="modal fade" id="modal1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 700px;">
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title" style="font-family: cursive;">Please Enter Your Order Id Number</h4> <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div> <!-- Modal body -->
-            <div class="modal-body">
+            <div class="modal-body" style="width:659px">
                 <div class="container">
 
                     <form action="{{route('OrderTraking')}}" id="orderTrack" method="get">
@@ -193,17 +193,44 @@
                             </table>
                         </div>
 
+
+                        <div class="col-md-12">
+                            <p id="customer_name" style="font-size: 17px;font-family: 'Material Design Icons';">Product:</p>
+
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th>Sl</th>
+                                    <th>Product Name</th>
+                                    <th>Squ</th>
+                                    <th>Quantity</th>
+
+                                </tr>
+                                </tbody>
+
+                                <tbody id="allproduct">
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+
+
                         <div class="col-md-12">
                             <p id="customer_name" style="font-size: 17px;font-family: 'Material Design Icons';">Track:</p>
                         </div>
 
-                        <div class="col-md-12">
-                            <div class="track">
-                                <div id="orderst" class="step"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                                <div id="shipping_st" class="step "> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                                <div id="final_oder" class="step"> <span class="icon"> <i class="fas fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
-                            </div>
-                            <hr>
+                        <div class="col-md-12" id="trac_view">
+
+
+                            {{--<div class="track" >--}}
+                                {{--<div id="orderst" class="step"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>--}}
+                                {{--<div id="shipping_st" class="step "> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>--}}
+                                {{--<div id="final_oder" class="step"> <span class="icon"> <i class="fas fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>--}}
+                                {{--<div id="shop_name" class="step"> <span class="icon"> <i class="fas fa-shopping-cart"></i> </span> <span class="text">Ready for pickup</span> </div>--}}
+                            {{--</div>--}}
+
                         </div>
 
                     </div>
@@ -375,6 +402,7 @@
 
                 success:function(data){
 
+
                     $('#showallinfo').css({
                         "display":"block"
                     })
@@ -383,36 +411,185 @@
                     $('#customerEmailAjax').empty().html(data['customer_info'].email);
                     $('#customerMobileAjax').empty().html(data['customer_info'].mobile);
 
+
+//                    <tr>
+//                    <td>1</td>
+//                    <td>1</td>
+//                    <td>1</td>
+//                    <td>1</td>
+//                    </tr>
+
+                    //-------------Start Product View------------
+
+                    var pro_parent_div = document.getElementById('allproduct');
+                    $('#allproduct').empty();
+
+                    var icnremtn =1;
+                    for(var i=0; i<data['order_details'].length; i++){
+                      var pro_tr = document.createElement('tr');
+                      var td_1 = document.createElement('td');
+                      var td_2 = document.createElement('td');
+                      var td_3 = document.createElement('td');
+                      var td_4 = document.createElement('td');
+
+                        td_1.innerText='#'+data['order'].orderId;
+                        td_2.innerText=data['order_details'][i].products.product_name;
+                        td_3.innerText=data['order_details'][i].products.product_sku;
+                        td_4.innerText=data['order_details'][i].qty;
+
+
+                        pro_tr.appendChild(td_1);
+                        pro_tr.appendChild(td_2);
+                        pro_tr.appendChild(td_3);
+                        pro_tr.appendChild(td_4);
+
+                        pro_parent_div.appendChild(pro_tr);
+
+                    }
+
+
+                    //------------Start Tracking -------------
+                    var TrackView  = document.getElementById('trac_view');
+                    $('#trac_view').empty();
+
+                    for(var i=0; i<data['order_details'].length; i++){
+
+                        var TrackElement = document.createElement('div');
+                        TrackElement.setAttribute('class','track');
+                        TrackElement.style.marginBottom="79px";
+
+                        //------------Second Div Create--------
+                        var SecondDiv = document.createElement('div');
+                        SecondDiv.setAttribute('id','orderst');
+                        SecondDiv.setAttribute('class','step');
+//                         $('#orderst').addClass('active');
+                        if(data['order_details'][i].order_status==1){
+                            SecondDiv.classList.add("active");
+                    }else{
+                        SecondDiv.classList.remove("active");
+                    }
+
+                        var SecondDivInnerSpan = document.createElement('span');
+                        SecondDivInnerSpan.setAttribute('class','icon');
+                        var SecondDivInnerITag = document.createElement('i');
+                        SecondDivInnerITag.setAttribute('class','fa fa-check');
+
+                        var SecondDivInnerSecondSpan = document.createElement('span');
+                        SecondDivInnerSecondSpan.setAttribute('class','text');
+                        SecondDivInnerSecondSpan.innerText="hello";
+
+                        //-------------Third Div TrackElement Innser Div---
+
+                        var ThirdDiv = document.createElement('div');
+                        ThirdDiv.setAttribute('id','shipping_st');
+                        ThirdDiv.setAttribute('class','step');
+                        if(data['order_details'][i].shipping_status==1){
+                            ThirdDiv.classList.add("active");
+                        }else{
+                            ThirdDiv.classList.remove("active");
+                        }
+                        var ThirdDivInnerSpan = document.createElement('span');
+                        ThirdDivInnerSpan.setAttribute('class','icon');
+                        var ThirdDivInnerITag = document.createElement('i');
+                        ThirdDivInnerITag.setAttribute('class','fa fa-truck');
+                        var ThirdDivInnerSecondSpan = document.createElement('span');
+                        ThirdDivInnerSecondSpan.setAttribute('class','text');
+                        ThirdDivInnerSecondSpan.innerText="on the way";
+
+                        ThirdDivInnerSpan.appendChild(ThirdDivInnerITag);
+                        ThirdDiv.appendChild(ThirdDivInnerSpan)
+                        ThirdDiv.appendChild(ThirdDivInnerSecondSpan)
+
+
+                        //-------------Four Div TrackElement Innser Div---
+                        var fourthDiv = document.createElement('div');
+                        fourthDiv.setAttribute('id','final_oder');
+                        fourthDiv.setAttribute('class','step');
+                        if(data['order_details'][i].order_complete==1){
+                            fourthDiv.classList.add("active");
+                        }else{
+                            fourthDiv.classList.remove("active");
+                        }
+                        var fourthDivInnerSpan = document.createElement('span');
+                        fourthDivInnerSpan.setAttribute('class','icon');
+                        var fourthDivInnerITag = document.createElement('i');
+                        fourthDivInnerITag.setAttribute('class','fa fa-box');
+                        var fourthDivInnerSecondSpan = document.createElement('span');
+                        fourthDivInnerSecondSpan.setAttribute('class','text');
+                        fourthDivInnerSecondSpan.innerText="Ready for pickup";
+
+
+                    //-------------Five Div TrackElement Innser Div---
+                        var fifthDiv = document.createElement('div');
+                        fifthDiv.setAttribute('id','shop_name');
+                        fifthDiv.setAttribute('class','step');
+                        var fifthDivInnerSpan = document.createElement('span');
+                        fifthDivInnerSpan.setAttribute('class','icon');
+                        var fifthDivInnerITag = document.createElement('i');
+                        fifthDivInnerITag.setAttribute('class','fa fa-shopping-cart');
+                        var fifthDivInnerSecondSpan = document.createElement('span');
+                        fifthDivInnerSecondSpan.setAttribute('class','text');
+                        if(data['order_details'][i].shop_id){
+                            fifthDivInnerSecondSpan.innerText=data['order_details'][i].shop_id;
+                        }
+
+
+
+                        fifthDivInnerSpan.appendChild(fifthDivInnerITag);
+                        fifthDiv.appendChild(fifthDivInnerSpan);
+                        fifthDiv.appendChild(fifthDivInnerSecondSpan);
+                        fourthDivInnerSpan.appendChild(fourthDivInnerITag);
+                        fourthDiv.appendChild(fourthDivInnerSpan);
+                        fourthDiv.appendChild(fourthDivInnerSecondSpan);
+
+                        SecondDivInnerSpan.appendChild(SecondDivInnerITag)
+
+                        SecondDiv.appendChild(SecondDivInnerSpan);
+                        SecondDiv.appendChild(SecondDivInnerSecondSpan);
+
+                        TrackElement.appendChild(SecondDiv);
+
+                        TrackElement.appendChild(ThirdDiv);
+                        TrackElement.appendChild(fourthDiv);
+                        TrackElement.appendChild(fifthDiv);
+                        //-----------find Parent -------
+
+                        TrackView.appendChild(TrackElement);
+
+
+
+                    }
+
                     //----------------- Order Status ---------------
-                    $('#order_confirm').val(data['order'].status);
-                    var confi = $('.order_confirm').val();
-
-                    if(confi==2){
-                        $('#orderst').addClass('active');
-                    }else if(confi==1){
-                        $('#orderst').removeClass('active');
-                    }
-
-                    //----------------- Shipping Status ---------------
-                    $('#shipping_status').val(data['order'].shipping_status);
-                    var shi_confi = $('.shipping_status').val();
-
-                    if(shi_confi==2){
-                        $('#shipping_st').addClass('active');
-                    }else if(shi_confi==1){
-                        $('#shipping_st').removeClass('active');
-                    }
-
-
-                    //----------------- Final Status ---------------
-                    $('#final_step').val(data['order'].order_complete);
-                    var final_step = $('.final_step').val();
-
-                    if(final_step==2){
-                        $('#final_oder').addClass('active');
-                    }else if(final_step==1){
-                        $('#final_oder').removeClass('active');
-                    }
+//                    $('#order_confirm').val(data['order'].status);
+//                    var confi = $('.order_confirm').val();
+//
+//                    if(confi==2){
+//                        $('#orderst').addClass('active');
+//                    }else if(confi==1){
+//                        $('#orderst').removeClass('active');
+//                    }
+//
+//                    //----------------- Shipping Status ---------------
+//                    $('#shipping_status').val(data['order'].shipping_status);
+//                    var shi_confi = $('.shipping_status').val();
+//
+//                    if(shi_confi==2){
+//                        $('#shipping_st').addClass('active');
+//                    }else if(shi_confi==1){
+//                        $('#shipping_st').removeClass('active');
+//                    }
+//
+//
+//                    //----------------- Final Status ---------------
+//                    $('#final_step').val(data['order'].order_complete);
+//                    var final_step = $('.final_step').val();
+//
+//                    if(final_step==2){
+//                        $('#final_oder').addClass('active');
+//                    }else if(final_step==1){
+//                        $('#final_oder').removeClass('active');
+//                    }
 
 
 

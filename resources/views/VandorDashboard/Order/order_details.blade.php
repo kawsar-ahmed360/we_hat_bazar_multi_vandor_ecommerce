@@ -158,7 +158,14 @@
                         </thead>
                         <tbody id="">
 
+                        @php
+                        $total_amount = 0;
+                        @endphp
+
                         @foreach(@$order_details as $key=>$order)
+                            @php
+                                $total_amount+=$order->subtotal;
+                            @endphp
                             <tr>
                                 <td>{{@$key+1}}</td>
                                 <td>#{{@$order->products->product_sku}}</td>
@@ -190,16 +197,17 @@
 
                         {{--</tr>--}}
 
-                        <tr>
-                            <td colspan="5" class="text-right">Coupon </td>
-                            <td colspan="4">@if(@$order->orders['coupon']!=null) {{@$order->orders['coupon']}} @else Null @endif</td>
+                        {{--<tr>--}}
+                            {{--<td colspan="5" class="text-right">Coupon </td>--}}
+                            {{--<td colspan="4">@if(@$order->orders['coupon']!=null) {{@$order->orders['coupon']}} @else Null @endif</td>--}}
 
-                        </tr>
+                        {{--</tr>--}}
 
 
                         <tr>
                             <td colspan="5" class="text-right">Total Amount</td>
-                            <td colspan="4">$@if(@$order->orders['total_ammount']) {{@$order->orders['total_ammount']}} @else Null @endif</td>
+{{--                            <td colspan="4">$@if(@$order->orders['total_ammount']) {{@$order->orders['total_ammount']}} @else Null @endif</td>--}}
+                            <td colspan="4">$@if(@$order->orders['total_ammount']) {{$total_amount}} @else Null @endif</td>
 
                         </tr>
 

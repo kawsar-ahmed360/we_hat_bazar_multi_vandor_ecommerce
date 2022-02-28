@@ -48,6 +48,7 @@
             <a href="{{route('VandorOrderDetails',[@$or->id,$shop_i->shop_id])}}" style="background: #d9b400;padding: 7px;border-radius: 4px" class=""><i style="color:white" class="fa fa-eye"></i></a>
             <a href="" style="background: red;padding: 7px;border-radius: 4px" class=""><i style="color:white" class="fa fa-trash"></i></a>
             <a href="{{route('VandorOrderStatusPage',[@$or->id,$shop_i->shop_id])}}" title="Status" style="background: tomato;padding: 7px;border-radius: 4px" class=""><i style="color:white" class="fa fa-asterisk"></i></a>
+            <a onmouseenter="satausview('{{$or->id}}','{{$shop_i->shop_id}}')" title="Status" style="background: tomato;padding: 7px;border-radius: 4px" class=""><i style="color:white" class="fa fa-hourglass-half"></i></a>
         </td>
         {{--<td>--}}
         {{--@if(@$or->status==1)--}}

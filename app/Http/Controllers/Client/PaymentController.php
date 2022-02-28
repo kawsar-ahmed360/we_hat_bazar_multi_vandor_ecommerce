@@ -185,6 +185,8 @@ class PaymentController extends Controller
             $OrderDetials->product_price = $item->price;
             $OrderDetials->product_id = $item->id;
             $OrderDetials->shop_id = $item->options->shop_id;
+            $OrderDetials->comm_price = $item->options->comm_price;
+            $OrderDetials->comm_persent = $item->options->comm_persent;
             $OrderDetials->qty = $item->qty;
             $OrderDetials->status = 1;
             $OrderDetials->save();

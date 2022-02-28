@@ -636,16 +636,19 @@
       </script>
 
 
+
       <script>
           $( window ).on("load", function() {
+
               $('.cd-dropdown').removeClass('dropdown-is-active');
+
               $('.owl-carousel').css({
                   "display":"block"
-              })
+              });
 
               $('.cd-dropdown').css({
                   "z-index":"9999"
-              })
+              });
           });
 
       </script>
@@ -655,10 +658,10 @@
 
               $('.too').toggle('dropdown-is-active');
 
-          })
+          });
 
 
-          })
+
       </script>
 
 

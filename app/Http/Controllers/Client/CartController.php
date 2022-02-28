@@ -14,7 +14,7 @@ class CartController extends Controller
 
         $product = ProductManage::where('id',$request->ProductId)->first();
 
-        Cart::add(['id'=>$request->ProductId,'name'=>$request->pro_name,'price'=>$request->price,'qty'=>$request->qty,'weight' => 550,'options' => ['image'=>$product->image,'shop_id'=>$product->shop_id,]]);
+        Cart::add(['id'=>$request->ProductId,'name'=>$request->pro_name,'price'=>$request->price,'qty'=>$request->qty,'weight' => 550,'options' => ['image'=>$product->image,'shop_id'=>$product->shop_id,'comm_price'=>$product->inc_commission_price,'comm_persent'=>$product->commission]]);
 
         return redirect('/shopping-cart-page');
     }

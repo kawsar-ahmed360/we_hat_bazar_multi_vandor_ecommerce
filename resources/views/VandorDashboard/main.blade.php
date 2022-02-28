@@ -7,21 +7,18 @@
     <!-- Row start -->
     <div class="row gutters">
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="info-stats4">
-                <div class="info-icon">
-                    <i class="icon-eye1"></i>
-                </div>
-                <div class="sale-num">
-                    <h3>9500</h3>
-                    <p>Visitors</p>
-                </div>
+
+            <div class="">
+
+                <h4 style="text-align: center;text-align: center;font-family: cursive;font-weight: 200;"> <i class="fa fa-arrow-circle-down" style="color: red;"></i> Total Order <i style="color: red;" class="fa fa-arrow-circle-down"></i></h4>
             </div>
-        </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+
             <div class="info-stats4">
+
                 <div class="info-icon">
                     <i class="icon-shopping-cart1"></i>
                 </div>
+
                 <div class="sale-num">
                     <h3>2500</h3>
                     <p>Orders</p>
@@ -29,24 +26,48 @@
             </div>
         </div>
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="">
+
+                <h4 style="text-align: center;text-align: center;font-family: cursive;font-weight: 200;"> <i class="fa fa-arrow-circle-down" style="color: red;"></i> Total Income <i style="color: red;" class="fa fa-arrow-circle-down"></i></h4>
+            </div>
             <div class="info-stats4">
                 <div class="info-icon">
-                    <i class="icon-shopping-bag1"></i>
+                    <i class="">৳</i>
                 </div>
                 <div class="sale-num">
-                    <h3>7500</h3>
-                    <p>Sales</p>
+                    <h3>{{@$total_income}}</h3>
+                    <p>Taka</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="">
+
+                <h4 style="text-align: center;text-align: center;font-family: cursive;font-weight: 200;"> <i class="fa fa-arrow-circle-down" style="color: red;"></i> Commission Amount <i style="color: red;" class="fa fa-arrow-circle-down"></i></h4>
+            </div>
+            <div class="info-stats4">
+                <div class="info-icon">
+                    <i class="">৳</i>
+                </div>
+                <div class="sale-num">
+                    <h3>{{@$comission_price}}</h3>
+                    <p>Taka</p>
                 </div>
             </div>
         </div>
         <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+            <div class="">
+
+                <h4 style="text-align: center;text-align: center;font-family: cursive;font-weight: 200;"> <i class="fa fa-arrow-circle-down" style="color: red;"></i> Vandor Amount <i style="color: red;" class="fa fa-arrow-circle-down"></i></h4>
+            </div>
             <div class="info-stats4">
                 <div class="info-icon">
-                    <i class="icon-activity"></i>
+                    <i class="">৳</i>
                 </div>
                 <div class="sale-num">
-                    <h3>3500</h3>
-                    <p>Expenses</p>
+                    <h3>{{@$with_out_comission}}</h3>
+                    <p>Taka</p>
                 </div>
             </div>
         </div>

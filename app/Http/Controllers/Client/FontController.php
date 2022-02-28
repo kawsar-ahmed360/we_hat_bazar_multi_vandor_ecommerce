@@ -2273,7 +2273,7 @@ class FontController extends Controller
         if($data['order']){
 
             $data['order'] =  Order::where('orderId',$orderId)->first();
-            $data['order_details'] = OrderDetail::where('order_id',$data['order']->id)->get();
+            $data['order_details'] = OrderDetail::with('products')->where('order_id',$data['order']->id)->get();
             $data['customer_info'] = CustomerRegistration::where('id',$data['order']->user_id)->first();
             return response()->json($data);
 

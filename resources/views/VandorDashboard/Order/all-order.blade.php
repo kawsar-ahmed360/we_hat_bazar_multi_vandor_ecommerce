@@ -110,8 +110,179 @@
     </div>
 
 
+    <!-------------Modal View------------->
+
+    <div class="modal fade bd-example-modal-lg ngmodalshow" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myLargeModalLabel">Order Status</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-striped">
+                         <thead>
+                             <tr>
+                                 <th>Sl</th>
+                                 <th>Product Name</th>
+                                 <th>Squ</th>
+                                 <th>Qty</th>
+                                 <th>Total Amount</th>
+                                 <th>Order Status</th>
+                                 <th>Shipping Status</th>
+                                 <th>Complete</th>
+                             </tr>
+                         </thead>
+
+                        <tbody id="tbody">
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {{--<button type="button" class="btn btn-primary">Save</button>--}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 @section('footer')
 
+
+    <script>
+        function satausview(OrderId,ShopId){
+
+            var Order_Id = OrderId;
+            var Shop_Id = ShopId;
+
+            var alerm =  confirm("Are you sure you want to preivew This Order Status!");
+           if(alerm){
+
+               $('.ngmodalshow').modal('show');
+
+               $.ajax({
+                   url: "{{route('VandorMouseOverPreview')}}",
+                   type: "GET",
+                   data: {Order_Id:Order_Id,Shop_Id:Shop_Id},
+
+                   success:function (data) {
+
+
+
+
+                       var tbody = document.getElementById('tbody');
+
+
+                       $('#tbody').empty();
+
+                       for(var i=0; i<data['order_details'].length; i++){
+                           //---------------Main Tr---------
+                           var n_tr = document.createElement('tr');
+                           //---------------All Td---------
+                           var n_td = document.createElement('td');
+                           var n_td1 = document.createElement('td');
+                           var n_td2 = document.createElement('td');
+                           var n_td3 = document.createElement('td');
+                           var n_td4 = document.createElement('td');
+                           var n_td5 = document.createElement('td');
+                           var n_td6 = document.createElement('td');
+                           var n_td7 = document.createElement('td');
+                            //---------------Dynamic Value---------
+                           n_td.innerText=data['order_details'][i].id;
+                           n_td1.innerText=data['order_details'][i].products.product_name;
+                           n_td2.innerText=data['order_details'][i].products.product_sku;
+                           n_td3.innerText=data['order_details'][i].qty;
+                           n_td4.innerText=data['order_details'][i].subtotal;
+                           //---------------Dynamic Value And Status And Css---------
+                           if(data['order_details'][i].order_status==1){
+                               //------------n_td5-------
+                               n_td5_span = document.createElement('span');
+                               n_td5_span.innerText="panding";
+                               n_td5.appendChild(n_td5_span);
+                               n_td5_span.style.background="red";
+                               n_td5_span.style.padding="4px";
+                               n_td5_span.style.color="white";
+                               n_td5_span.style.borderRadius="5px";
+                           }else{
+                               //------------n_td5-------
+                               n_td5_span = document.createElement('span');
+                               n_td5_span.innerText="approve";
+                               n_td5.appendChild(n_td5_span);
+                               n_td5_span.style.background="green";
+                               n_td5_span.style.padding="4px";
+                               n_td5_span.style.color="white";
+                               n_td5_span.style.borderRadius="5px";
+                           }
+
+                           if(data['order_details'][i].shipping_status==1) {
+                               n_td6_span = document.createElement('span');
+                               n_td6_span.innerText = "panding";
+                               n_td6.appendChild(n_td6_span);
+                               n_td6_span.style.background = "red";
+                               n_td6_span.style.padding = "4px";
+                               n_td6_span.style.color = "white";
+                               n_td6_span.style.borderRadius = "5px";
+                           }else{
+                               n_td6_span = document.createElement('span');
+                               n_td6_span.innerText = "Approve";
+                               n_td6.appendChild(n_td6_span);
+                               n_td6_span.style.background = "green";
+                               n_td6_span.style.padding = "4px";
+                               n_td6_span.style.color = "white";
+                               n_td6_span.style.borderRadius = "5px";
+                           }
+
+
+                           if(data['order_details'][i].order_complete==1) {
+                               n_td7_span = document.createElement('span');
+                               n_td7_span.innerText = 'panding';
+                               n_td7.appendChild(n_td7_span);
+                               n_td7_span.style.background = "red";
+                               n_td7_span.style.padding = "4px";
+                               n_td7_span.style.color = "white";
+                               n_td7_span.style.borderRadius = "5px";
+                           }else{
+                               n_td7_span = document.createElement('span');
+                               n_td7_span.innerText = 'Approve';
+                               n_td7.appendChild(n_td7_span);
+                               n_td7_span.style.background = "green";
+                               n_td7_span.style.padding = "4px";
+                               n_td7_span.style.color = "white";
+                               n_td7_span.style.borderRadius = "5px";
+                           }
+                           //----------td Append Tr---------
+                           n_tr.appendChild(n_td);
+                           n_tr.appendChild(n_td1);
+                           n_tr.appendChild(n_td2);
+                           n_tr.appendChild(n_td3);
+                           n_tr.appendChild(n_td4);
+                           n_tr.appendChild(n_td5);
+                           n_tr.appendChild(n_td6);
+                           n_tr.appendChild(n_td7);
+                           //----------Tbody Append Tr---------
+                           tbody.appendChild(n_tr);
+
+
+                       }
+
+
+
+                   }
+
+               });
+           }
+
+
+        }
+    </script>
 
     {{--<script>--}}
         {{--function Approve(id){--}}

@@ -24,8 +24,9 @@
                                     <h5>Favourites</h5>
                                     <div class="doc-labels">
                                         <a href="#" class="active">
-                                            <i class="fa fa-dollar"></i>Widrow Panel
+                                            <i class=""></i>৳ withdraw Panel
                                         </a>
+
 
                                     </div>
                                 </div>
@@ -94,42 +95,165 @@
                             </div>
 
 
+                            <style>
 
+
+
+                                .btn_es {
+
+                                    margin: 10px;
+                                    padding: 30px;
+                                    text-align: center;
+                                    text-transform: uppercase;
+                                    position: fixed;
+                                    height: 156px;
+                                    width: 257px;
+                                    transition: 0.5s;
+                                    background-size: 200% auto;
+                                    color: white;
+                                    /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+                                    box-shadow: 0 0 20px #eee;
+                                    border-radius: 10px;
+                                }
+
+                                /* Demo Stuff End -> */
+
+                                /* <- Magic Stuff Start */
+
+                                .btn_es:hover {
+                                    background-position: right center; /* change the direction of the change here */
+                                }
+
+                                .btn-1 {
+                                    /*background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);*/
+                                    background: linear-gradient(90deg, #ee0000 0%, #ffb40b 100%);
+                                }
+
+                                .btn-2{
+                                    background: linear-gradient(90deg, #ef0c96 0%, #00f1f1 100%);
+                                }
+
+                                .btn-3{
+                                    background: linear-gradient(90deg, #0da1c1 0%, #00fff3 100%);
+
+                                }
+                                .btn-4{
+                                    background: linear-gradient(90deg, #733030db 0%, #fe0b0b 100%);
+
+                                }
+
+                                .btn-5{
+                                    background: linear-gradient(90deg, #ffb735 0%, #88a904 100%);
+
+                                }
+
+                            </style>
 
                             <div class="documentsContainerScroll">
                                 <div class="documents-body">
                                     <!-- Row start -->
                                   <div class="row">
+                                      {{--<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">--}}
+                                          {{--<a class="btn_es btn-1">Hover me</a>--}}
+                                          {{--<div class="doc-block" style=" box-shadow: 9px 6px 2px 1px #ea9f4d;">--}}
+                                              {{--<div class="doc-icon" style="border: 1px solid #646567;">--}}
+                                                  {{--<img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />--}}
+                                              {{--</div>--}}
+                                              {{--<div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;">Overall Income</div>--}}
+                                              {{--<p style="font-family: cursive;font-size: 23px;">$1200</p>--}}
+                                          {{--</div>--}}
+
+
+                                      {{--</div>--}}
+
+                                      {{--<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">--}}
+                                          {{--<a class="btn_es btn-1">Hover me</a>--}}
+                                          {{--<div class="doc-block" style=" box-shadow: 9px 6px 2px 1px #ea9f4d;">--}}
+                                          {{--<div class="doc-icon" style="border: 1px solid #646567;">--}}
+                                          {{--<img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />--}}
+                                          {{--</div>--}}
+                                          {{--<div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;">Overall Income</div>--}}
+                                          {{--<p style="font-family: cursive;font-size: 23px;">$1200</p>--}}
+                                          {{--</div>--}}
+
+
+                                      {{--</div>--}}
+
+                                      <input type="hidden" value="{{$shop_id}}" id="shop_id">
+                                      <input type="hidden" value="{{$user_id}}" id="user_id">
+
+                                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom: 10px;">
+                                          <label for="">Start Date</label>
+                                          <input type="date" id="s_date" class="form-control" name="">
+                                      </div>
+
+                                      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12" style="margin-bottom: 10px;">
+                                          <label for="">End Date</label>
+                                          <input disabled type="date" id="e_date" class="form-control" name="">
+                                      </div>
+
+
+
                                       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                          <div class="doc-block" style=" box-shadow: 9px 6px 2px 1px #ea9f4d;">
-                                              <div class="doc-icon" style="border: 1px solid #646567;">
-                                                  <img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />
-                                              </div>
-                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;">Overall Income</div>
-                                              <p style="font-family: cursive;font-size: 23px;">$1200</p>
+
+                                          <div class="doc-block btn-1" style="">
+                                          <div class="doc-icon" style="border: 1px solid #646567;">
+                                          <img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />
                                           </div>
+                                          <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Total Income</div>
+                                          <p style="font-family: cursive;font-size: 23px;color: white;" id="TotalIncome">৳{{$total_income}}</p>
+                                          </div>
+
+
                                       </div>
 
                                       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                          <div class="doc-block" style=" box-shadow: 9px 6px 2px 1px #ff326e;">
+                                          <div class="doc-block btn-2" style="">
                                               <div class="doc-icon" style="border: 1px solid #646567;">
                                                   <img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />
                                               </div>
-                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;">Overall Income</div>
-                                              <p style="font-family: cursive;font-size: 23px;">$1200</p>
+                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Commission</div>
+                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="TotalCommission">৳{{$comission_price}}</p>
                                           </div>
                                       </div>
 
 
                                       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                          <div class="doc-block" style=" box-shadow: 9px 6px 2px 1px #9543ed;">
+                                          <div class="doc-block btn-3" style="">
                                               <div class="doc-icon" style="border: 1px solid #646567;">
                                                   <img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />
                                               </div>
-                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;">Overall Income</div>
-                                              <p style="font-family: cursive;font-size: 23px;">$1200</p>
+                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">WithOut Commission</div>
+                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="WithOutCommision">৳{{$with_out_comission}}</p>
                                           </div>
                                       </div>
+
+
+                                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                          <a href="{{route('VandorPanelPaymentWithdrawPanding',[@$shop_id,@$user_id])}}">
+                                          <div class="doc-block btn-4" style="">
+                                              <div class="doc-icon" style="border: 1px solid #646567;">
+                                                  <img style="height: 94px;width: 88px;" src="{{asset('backend/pending-work.png')}}" alt="Doc Icon" />
+                                              </div>
+                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Panding Request</div>
+                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="WithOutCommision"></p>
+                                          </div>
+                                          </a>
+                                      </div>
+
+                                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                          <a href="">
+                                          <div class="doc-block btn-5" style="">
+                                              <div class="doc-icon" style="border: 1px solid #646567;">
+                                                  <img style="height: 94px;width: 88px;" src="{{asset('backend/approve.png')}}" alt="Doc Icon" />
+                                              </div>
+                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Approve Request</div>
+                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="WithOutCommision"></p>
+                                          </div>
+                                          </a>
+                                      </div>
+
+
                                   </div>
 
                                 </div>
@@ -144,5 +268,48 @@
         </div>
     </div>
     <!-- Row end -->
+
+    @section('footer')
+
+        <script>
+            $(document).on('change','#s_date',function () {
+                var s_date = $('#s_date').val();
+
+
+                if(s_date!=null){
+                    var e_date = $('#e_date').val();
+                    $('#e_date').removeAttr('disabled');
+                    EndDate();
+
+                }
+
+            });
+
+            function EndDate(){
+
+                $(document).on('change','#e_date',function () {
+                    var s_date = $('#s_date').val();
+                    var e_date = $('#e_date').val();
+                    var shop_id = $('#shop_id').val();
+                    var user_id = $('#user_id').val();
+
+                    $.ajax({
+                        url:"{{route('VandorPanelPaymentWidrowDateWiseReport')}}",
+                        type:"GET",
+                        data:{s_date:s_date,e_date:e_date,shop_id:shop_id,user_id:user_id},
+                        success:function(data){
+
+                          $('#TotalIncome').text('৳'+data['total_income']);
+                          $('#TotalCommission').text('৳'+data['comission_price']);
+                          $('#WithOutCommision').text('৳'+data['with_out_comission']);
+
+                        }
+
+                    })
+                });
+
+            }
+        </script>
+        @endsection
 
     @endsection

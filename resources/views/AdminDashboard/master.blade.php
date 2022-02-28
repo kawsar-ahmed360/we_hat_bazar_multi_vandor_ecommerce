@@ -174,7 +174,8 @@
                     {{ Request::routeIs('VandorPanelProductPage') ? 'active' : '' }} {{ Request::routeIs('VandorPanelProductAdd') ? 'active' : '' }}
                     {{ Request::routeIs('VandorPanelProductAll') ? 'active' : '' }}  {{ Request::routeIs('VandorPanelProductEdit') ? 'active' : '' }}
                     {{ Request::routeIs('VandorPanelProductUpdate') ? 'active' : '' }} {{ Request::routeIs('VandorPanelProductAddMore') ? 'active' : '' }}
-                    {{ Request::routeIs('VandorPanelProductAddMoreUpdate') ? 'active' : '' }} {{ Request::routeIs('VandorPanelProductDiscount') ? 'active' : '' }}">
+                    {{ Request::routeIs('VandorPanelProductAddMoreUpdate') ? 'active' : '' }} {{ Request::routeIs('VandorPanelProductDiscount') ? 'active' : '' }}
+                    {{ Request::routeIs('VandorPanelPaymentWithdrownRequestAll') ? 'active' : '' }}{{ Request::routeIs('VandorPanelPaymentWidrowPage') ? 'active' : '' }} ">
                         <a href="#">
                             <i class="icon-file-text"></i>
                             <span class="menu-text">Vandor</span>
@@ -190,9 +191,18 @@
                                     <a class="{{ Request::routeIs('VandorAdminApproveList') ? 'current-page' : '' }} " href="{{route('VandorAdminApproveList')}}">Vandor Approve List</a>
                                 </li>
 
+
+
+                                <li>
+                                    <a class="{{ Request::routeIs('VandorPanelPaymentWithdrownRequestAll') ? 'current-page' : '' }}" href="{{route('VandorPanelPaymentWithdrownRequestAll')}}">Vandor Withdraw Request</a>
+                                </li>
+
                             </ul>
                         </div>
                     </li>
+
+
+
 
 
                     <li class="header-menu">Fontend Section</li>

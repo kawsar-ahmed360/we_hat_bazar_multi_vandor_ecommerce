@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Mail\VandorApproveMail\approve_mail;
 use App\Models\Admin;
 use App\Models\Admin\Setting;
+use App\Models\Client\Order;
 use App\Models\Vandor;
 use App\Models\VandorCategoryPermission;
+use App\Models\VandorPaymentRequest;
 use App\View\Components\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -475,14 +478,79 @@ class VandorReviewManageController extends Controller
 
     //--------------------Vandor Payment Widrow Section----------
 
-    public function VandorPanelPaymentWidrowPage($shop_id,$id){
+    public function VandorPanelPaymentWidrowPage($shop_id,$id)
+    {
 
-        $data['logo'] = Setting::where('id','1')->first();
-        $data['info'] = Admin::where('id',Auth::guard('admin')->user()->id)->first();
-        $data['vandor'] = Vandor::where('id',$id)->where('shop_id',$shop_id)->first();
+        $data['logo'] = Setting::where('id', '1')->first();
+        $data['info'] = Admin::where('id', Auth::guard('admin')->user()->id)->first();
+        $data['vandor'] = Vandor::where('id', $id)->where('shop_id', $shop_id)->first();
+        $shop_id = Vandor::where('id', $id)->where('shop_id', $shop_id)->first()->shop_id;
+        $data['order'] = Order::where('shop_id', 'LIKE', "%$shop_id%")->get();
 
+
+        foreach ($data['order'] as $key => $or){
+
+        $data['total_income'] = \App\Models\Client\OrderDetail::where('shop_id', $shop_id)->where('order_status','2')->where('shipping_status','2')->where('order_complete','2')->get()->sum('subtotal');
+        $data['comission_price'] = \App\Models\Client\OrderDetail::where('shop_id', $shop_id)->where('order_status','2')->where('shipping_status','2')->where('order_complete','2')->get()->sum('comm_price');
+        $data['with_out_comission'] = $data['total_income']-$data['comission_price'];
+
+
+       }
+
+
+        $data['shop_id'] = $shop_id;
+        $data['user_id'] = $id;
         return view('AdminDashboard.VandorWidrow.widrow_page',$data);
 
+    }
 
+    public function VandorPanelPaymentWidrowDateWiseReport(Request $request){
+
+        $from    = Carbon::parse($request->s_date)
+            ->startOfDay()        // 2018-09-29 00:00:00.000000
+            ->toDateTimeString(); // 2018-09-29 00:00:00
+
+        $to      = Carbon::parse($request->e_date)
+            ->endOfDay()          // 2018-09-29 23:59:59.000000
+            ->toDateTimeString(); // 2018-09-29 23:59:59
+
+
+
+        $data['logo'] = Setting::where('id', '1')->first();
+        $data['info'] = Admin::where('id', Auth::guard('admin')->user()->id)->first();
+        $data['vandor'] = Vandor::where('id', $request->user_id)->where('shop_id', $request->shop_id)->first();
+        $shop_id = Vandor::where('id',$request->user_id)->where('shop_id',$request->shop_id)->first()->shop_id;
+        $data['order'] = Order::where('shop_id', 'LIKE', "%$shop_id%")->get();
+
+
+        foreach ($data['order'] as $key => $or){
+
+            $data['total_income'] = \App\Models\Client\OrderDetail::where('shop_id',$request->shop_id)->whereBetween('created_at',[$from,$to])->where('order_status','2')->where('shipping_status','2')->where('order_complete','2')->get()->sum('subtotal');
+            $data['comission_price'] = \App\Models\Client\OrderDetail::where('shop_id',$request->shop_id)->whereBetween('created_at',[$from,$to])->where('order_status','2')->where('shipping_status','2')->where('order_complete','2')->get()->sum('comm_price');
+            $data['with_out_comission'] = $data['total_income']-$data['comission_price'];
+        }
+
+        $data['shop_id'] = $request->shop_id;
+        $data['user_id'] = $request->id;
+
+        return response()->json(['total_income'=>$data['total_income'],'comission_price'=>$data['comission_price'],'with_out_comission'=>$data['with_out_comission']]);
+
+    }
+
+
+    //------------------Vandor WithDrown Request ALl View---------------
+
+    public function VandorPanelPaymentWithdrownRequestAll(){
+
+        $data['logo'] = Setting::where('id', '1')->first();
+        $data['info'] = Admin::where('id', Auth::guard('admin')->user()->id)->first();
+        $data['panding_windrown_list'] =  VandorPaymentRequest::where('status','1')->OrderBy('id','desc')->get();
+
+        return view('AdminDashboard.VandorWidrow.all_withdrown_panding_list',$data);
+    }
+
+    public function VandorPanelPaymentWithdrawPanding($shop_id,$user_id){
+
+        return $shop_id;
     }
 }

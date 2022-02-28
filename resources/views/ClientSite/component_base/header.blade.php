@@ -519,79 +519,79 @@
 @section('client-footer')
 
 
-    <script>
-        $('#orderTrack').submit(function(e){
-            e.preventDefault();
+    {{--<script>--}}
+        {{--$('#orderTrack').submit(function(e){--}}
+            {{--e.preventDefault();--}}
 
-            var url = $(this).attr('action');
-            var method = $(this).attr('method');
-            var data = $(this).serialize();
-
-
-            var a = document.forms["orderTrack"]["OrderId"].value;
-
-            if (a == null || a == "") {
-                alert('null');
-            }else{
+            {{--var url = $(this).attr('action');--}}
+            {{--var method = $(this).attr('method');--}}
+            {{--var data = $(this).serialize();--}}
 
 
-                $.ajax({
-                    url:url,
-                    type:method,
-                    data:data,
+            {{--var a = document.forms["orderTrack"]["OrderId"].value;--}}
 
-                    success:function(data){
-
-                        $('#showallinfo').css({
-                            "display":"block"
-                        })
-
-                        $('#OrderNumber').empty().html(data['order'].orderId);
-                        $('#customerNameAjax').empty().html(data['customer_info'].name);
-                        $('#customerEmailAjax').empty().html(data['customer_info'].email);
-                        $('#customerMobileAjax').empty().html(data['customer_info'].mobile);
-
-                        //----------------- Order Status ---------------
-                        $('#order_confirm').val(data['order'].status);
-                        var confi = $('.order_confirm').val();
-
-                        if(confi==2){
-                            $('#orderst').addClass('active');
-                        }else if(confi==1){
-                            $('#orderst').removeClass('active');
-                        }
-
-                        //----------------- Shipping Status ---------------
-                        $('#shipping_status').val(data['order'].shipping_status);
-                        var shi_confi = $('.shipping_status').val();
-
-                        if(shi_confi==2){
-                            $('#shipping_st').addClass('active');
-                        }else if(shi_confi==1){
-                            $('#shipping_st').removeClass('active');
-                        }
+            {{--if (a == null || a == "") {--}}
+                {{--alert('null');--}}
+            {{--}else{--}}
 
 
-                        //----------------- Final Status ---------------
-                        $('#final_step').val(data['order'].order_complete);
-                        var final_step = $('.final_step').val();
+                {{--$.ajax({--}}
+                    {{--url:url,--}}
+                    {{--type:method,--}}
+                    {{--data:data,--}}
 
-                        if(final_step==2){
-                            $('#final_oder').addClass('active');
-                        }else if(final_step==1){
-                            $('#final_oder').removeClass('active');
-                        }
+                    {{--success:function(data){--}}
+
+                        {{--$('#showallinfo').css({--}}
+                            {{--"display":"block"--}}
+                        {{--})--}}
+
+                        {{--$('#OrderNumber').empty().html(data['order'].orderId);--}}
+                        {{--$('#customerNameAjax').empty().html(data['customer_info'].name);--}}
+                        {{--$('#customerEmailAjax').empty().html(data['customer_info'].email);--}}
+                        {{--$('#customerMobileAjax').empty().html(data['customer_info'].mobile);--}}
+
+                        {{--//----------------- Order Status -----------------}}
+                        {{--$('#order_confirm').val(data['order'].status);--}}
+                        {{--var confi = $('.order_confirm').val();--}}
+
+                        {{--if(confi==2){--}}
+                            {{--$('#orderst').addClass('active');--}}
+                        {{--}else if(confi==1){--}}
+                            {{--$('#orderst').removeClass('active');--}}
+                        {{--}--}}
+
+                        {{--//----------------- Shipping Status -----------------}}
+                        {{--$('#shipping_status').val(data['order'].shipping_status);--}}
+                        {{--var shi_confi = $('.shipping_status').val();--}}
+
+                        {{--if(shi_confi==2){--}}
+                            {{--$('#shipping_st').addClass('active');--}}
+                        {{--}else if(shi_confi==1){--}}
+                            {{--$('#shipping_st').removeClass('active');--}}
+                        {{--}--}}
+
+
+                        {{--//----------------- Final Status -----------------}}
+                        {{--$('#final_step').val(data['order'].order_complete);--}}
+                        {{--var final_step = $('.final_step').val();--}}
+
+                        {{--if(final_step==2){--}}
+                            {{--$('#final_oder').addClass('active');--}}
+                        {{--}else if(final_step==1){--}}
+                            {{--$('#final_oder').removeClass('active');--}}
+                        {{--}--}}
 
 
 
-                    }
-                });
+                    {{--}--}}
+                {{--});--}}
 
-            }
+            {{--}--}}
 
 
-        });
-    </script>
+        {{--});--}}
+    {{--</script>--}}
 
 
 

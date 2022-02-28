@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth:vandor'], function () {
     Route::get('/Vandor/vandor-complete-status-approve/{id}/{shop_id}', [\App\Http\Controllers\Vandor\VandorOrderManageController::class,'VandorCompleteStatusApporve'])->name('VandorCompleteStatusApporve');
     Route::get('/Vandor/vandor-complete-status-panding/{id}/{shop_id}', [\App\Http\Controllers\Vandor\VandorOrderManageController::class,'VandorCompleteStatusPanding'])->name('VandorCompleteStatusPanding');
 
+    Route::get('/Vandor/vandor-order-mouseover-preview', [\App\Http\Controllers\Vandor\VandorOrderManageController::class,'VandorMouseOverPreview'])->name('VandorMouseOverPreview');
+
     //------------------------Multi Order Prient Section---------------------------------
 
     Route::post('/Vandor/vandor-multi-order-print', [\App\Http\Controllers\Vandor\VandorOrderManageController::class,'VandorMultiOrderPrient'])->name('VandorMultiOrderPrient');
@@ -74,11 +76,18 @@ Route::group(['middleware' => 'auth:vandor'], function () {
     route::get('Vandor/stock_ganarete_pro_ajax',[\App\Http\Controllers\Vandor\VadorStokeGenarateController::class,'VandorStockGenaratorProductAjax'])->name('VandorStockGenaratorProductAjax');
     route::post('Vandor/product_wise_stock',[\App\Http\Controllers\Vandor\VadorStokeGenarateController::class,'VandorProductWiseStockGenare'])->name('VandorProductWiseStockGenare');
 
-    //..............
-
-
 
     Route::get('/Vandor/vandor-mail-template', [\App\Http\Controllers\Vandor\VandorOrderManageController::class,'VandorMailTemplate'])->name('VandorMailTemplate');
+
+    //..............................Withdraw Section ---------------------
+
+    Route::get('/Vandor/vandor-withdraw-request-form', [\App\Http\Controllers\Vandor\VandorWithDrawRequestController::class,'VandorWithdraRequest'])->name('VandorWithdraRequest');
+    Route::post('/Vandor/vandor-withdraw-request-store', [\App\Http\Controllers\Vandor\VandorWithDrawRequestController::class,'VandorWithdraRequestStore'])->name('VandorWithdraRequestStore');
+    Route::get('/Vandor/vandor-withdraw-panding-request', [\App\Http\Controllers\Vandor\VandorWithDrawRequestController::class,'VandorWithdraPandingRequest'])->name('VandorWithdraPandingRequest');
+    Route::get('/Vandor/vandor-withdraw-panding-request-filter-ajax', [\App\Http\Controllers\Vandor\VandorWithDrawRequestController::class,'VandorWithdraPandingRequestAjaxFilter'])->name('VandorWithdraPandingRequestAjaxFilter');
+    Route::get('/Vandor/vandor-withdraw-approve-request', [\App\Http\Controllers\Vandor\VandorWithDrawRequestController::class,'VandorWithdraApproveRequest'])->name('VandorWithdraApproveRequest');
+    Route::get('/Vandor/vandor-withdraw-approve-request-filter-ajax', [\App\Http\Controllers\Vandor\VandorWithDrawRequestController::class,'VandorWithdraApproveRequestFilterAjax'])->name('VandorWithdraApproveRequestFilterAjax');
+
 
 });
 

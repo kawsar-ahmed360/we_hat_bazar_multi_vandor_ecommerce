@@ -99,6 +99,20 @@ class VandorDashboardController extends Controller
             ->sum('subtotal');
 
 
+        //------------------------ Vandor Amount ---------------------
+
+        $shopId = $data['info']->shop_id;
+
+        $data['order'] = Order::where('shop_id', 'LIKE', "%$shopId%")->get();
+
+        foreach ($data['order'] as $key => $or){
+
+            $data['total_income'] = \App\Models\Client\OrderDetail::where('shop_id',$shopId)->where('order_status','2')->where('shipping_status','2')->where('order_complete','2')->get()->sum('subtotal');
+            $data['comission_price'] = \App\Models\Client\OrderDetail::where('shop_id',$shopId)->where('order_status','2')->where('shipping_status','2')->where('order_complete','2')->get()->sum('comm_price');
+            $data['with_out_comission'] = $data['total_income']-$data['comission_price'];
+        }
+
+
 
 
 
