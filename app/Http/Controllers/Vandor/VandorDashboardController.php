@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client\Order;
 use App\Models\Client\OrderDetail;
 use App\Models\Vandor;
+use App\Models\VandorPaymentRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -100,6 +101,8 @@ class VandorDashboardController extends Controller
 
 
         //------------------------ Vandor Amount ---------------------
+
+        $data['with_drown'] = VandorPaymentRequest::where('shop_id',$data['info']->shop_id)->where('user_id',$id)->where('status','2')->get()->sum('approve_amount');
 
         $shopId = $data['info']->shop_id;
 

@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="card-header">
-                            <div class="card-title" style="font-size: 20px;font-family: cursive;text-align: center;color: #fff;">Available Blance: ৳@if(@$with_out_comission!=null) {{@$with_out_comission-@$request_amount}} @else {{@$with_out_comission}} @endif</div>
+                            <div class="card-title" style="font-size: 20px;font-family: cursive;text-align: center;color: #fff;">Available Blance: ৳@if(@$with_out_comission!=null) {{@$with_out_comission-@$request_amount}} @else {{@$with_out_comission??'0'}} @endif</div>
                             <input type="hidden" value="@if(@$with_out_comission!=null){{@$with_out_comission-@$request_amount}}@else{{@$with_out_comission}}@endif" id="Total_Ammount">
                         </div>
 
@@ -135,7 +135,7 @@
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                         <div class="text-right">
                                             <button type="button" id="submit" name="submit" class="btn btn-white">Cancel</button>
-                                            @if($panding_request_count<3)
+                                            @if($panding_request_count<1)
                                             <button type="submit" id="submit" name="submit" class="btn btn-primary">Submit Form</button>
                                                 @else
                                                 <button type="button"  disabled class="btn btn-primary">Submit Form</button>

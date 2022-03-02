@@ -45,9 +45,13 @@
                                     <label>Category Name</label>
                                     <select class="form-control" name="cate_wise_report">
                                         <option disabled="" selected="">----Select Category----</option>
+                                        @if(@$vandor_category!=null)
                                         @foreach($category as $cate)
                                             <option value="{{ @$cate->id }}">{{ @$cate->category_name }}</option>
                                         @endforeach
+                                            @else
+
+                                        @endif
                                     </select>
                                 </div>
 
@@ -75,9 +79,12 @@
                                     <label>Category Name</label>
                                     <select class="form-control" name="cate_wise_report" id="cate_wise_report">
                                         <option disabled="" selected="">----Select Category----</option>
+                                        @if(@$vandor_category!=null)
                                         @foreach($category as $cate)
                                             <option value="{{ @$cate->id }}">{{ @$cate->category_name }}</option>
                                         @endforeach
+                                            @else
+                                        @endif
                                     </select>
                                 </div>
 

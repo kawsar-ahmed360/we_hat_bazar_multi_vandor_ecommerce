@@ -487,6 +487,9 @@ class VandorReviewManageController extends Controller
         $shop_id = Vandor::where('id', $id)->where('shop_id', $shop_id)->first()->shop_id;
         $data['order'] = Order::where('shop_id', 'LIKE', "%$shop_id%")->get();
 
+        $data['panding_request'] = VandorPaymentRequest::where('shop_id',@$shop_id)->where('user_id',@$data['vandor']->id)->where('status','1')->get()->count();
+        $data['Approve_request'] = VandorPaymentRequest::where('shop_id',@$shop_id)->where('user_id',@$data['vandor']->id)->where('status','2')->get()->count();
+        $data['Approve_request_amount'] = VandorPaymentRequest::where('shop_id',@$shop_id)->where('user_id',@$data['vandor']->id)->where('status','2')->get()->sum('approve_amount');
 
         foreach ($data['order'] as $key => $or){
 
@@ -551,6 +554,58 @@ class VandorReviewManageController extends Controller
 
     public function VandorPanelPaymentWithdrawPanding($shop_id,$user_id){
 
-        return $shop_id;
+        $data['logo'] = Setting::where('id', '1')->first();
+        $data['info'] = Admin::where('id', Auth::guard('admin')->user()->id)->first();
+        $data['vandor'] = Vandor::where('id', $user_id)->where('shop_id', $shop_id)->first();
+        $shop_id = Vandor::where('id', $user_id)->where('shop_id', $shop_id)->first()->shop_id;
+        $data['panding_list'] = VandorPaymentRequest::where('shop_id',$shop_id)->where('user_id',$user_id)->where('status','1')->get();
+        $data['approve_amount'] = VandorPaymentRequest::where('shop_id',$shop_id)->where('user_id',$user_id)->where('status','2')->get()->sum('approve_amount');
+
+        $data['order'] = Order::where('shop_id', 'LIKE', "%$shop_id%")->get();
+        foreach ($data['order'] as $key => $or){
+
+            $data['total_income'] = \App\Models\Client\OrderDetail::where('shop_id', $shop_id)->where('order_status','2')->where('shipping_status','2')->where('order_complete','2')->get()->sum('subtotal');
+            $data['comission_price'] = \App\Models\Client\OrderDetail::where('shop_id', $shop_id)->where('order_status','2')->where('shipping_status','2')->where('order_complete','2')->get()->sum('comm_price');
+            $data['with_out_comission'] = $data['total_income']-$data['comission_price'];
+
+
+        }
+
+        $data['shop_id'] = $shop_id;
+        $data['user_id'] = $user_id;
+        return view('AdminDashboard.VandorWidrow.payment_panding_request',$data);
+
+    }
+
+    public function VandorPanelPaymentWithdrawApprove($shop_id,$user_id){
+
+        $data['logo'] = Setting::where('id', '1')->first();
+        $data['info'] = Admin::where('id', Auth::guard('admin')->user()->id)->first();
+        $data['vandor'] = Vandor::where('id', $user_id)->where('shop_id', $shop_id)->first();
+        $shop_id = Vandor::where('id', $user_id)->where('shop_id', $shop_id)->first()->shop_id;
+        $data['approve_list'] = VandorPaymentRequest::where('shop_id',$shop_id)->where('user_id',$user_id)->where('status','2')->get();
+        $data['shop_id'] = $shop_id;
+        $data['user_id'] = $user_id;
+        return view('AdminDashboard.VandorWidrow.payment_approve_request',$data);
+    }
+
+    //-----------------Super Admin Pay Amount--------------
+
+    public function VandorPanelPaymentWithdrawPaySubmit(Request $request){
+
+        if($request->pay_amount>$request->vandor_total_amount){
+            return redirect()->back();
+        }
+
+        if($request->pay_amount>$request->request_amount){
+            return redirect()->back();
+        }
+
+        $update = VandorPaymentRequest::where('id',$request->EditeId)->first();
+        $update->approve_amount = $request->pay_amount;
+        $update->status = 2;
+        $update->save();
+
+        return redirect()->back();
     }
 }

@@ -143,8 +143,16 @@
                                 }
 
                                 .btn-5{
-                                    background: linear-gradient(90deg, #ffb735 0%, #88a904 100%);
+                                    background: linear-gradient(90deg, #ee12ff 0%, #a90413 100%);
 
+                                }
+
+                                .btn-7{
+                                    background: linear-gradient(90deg, #ffb735 0%, #88a904 100%);
+                                }
+
+                                .btn-8{
+                                    background: linear-gradient(90deg, #572424 0%, #4bff00 100%);
                                 }
 
                             </style>
@@ -198,10 +206,10 @@
 
                                           <div class="doc-block btn-1" style="">
                                           <div class="doc-icon" style="border: 1px solid #646567;">
-                                          <img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />
+                                              <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                                           </div>
                                           <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Total Income</div>
-                                          <p style="font-family: cursive;font-size: 23px;color: white;" id="TotalIncome">৳{{$total_income}}</p>
+                                          <p style="font-family: cursive;font-size: 23px;color: white;" id="TotalIncome">৳{{@$total_income??'0'}}</p>
                                           </div>
 
 
@@ -210,21 +218,47 @@
                                       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                           <div class="doc-block btn-2" style="">
                                               <div class="doc-icon" style="border: 1px solid #646567;">
-                                                  <img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />
+                                                  <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                                               </div>
                                               <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Commission</div>
-                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="TotalCommission">৳{{$comission_price}}</p>
+                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="TotalCommission">৳{{@$comission_price??'0'}}</p>
                                           </div>
                                       </div>
 
 
                                       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+
                                           <div class="doc-block btn-3" style="">
                                               <div class="doc-icon" style="border: 1px solid #646567;">
-                                                  <img style="height: 94px;width: 88px;" src="{{asset('backend/taka.png')}}" alt="Doc Icon" />
+                                                  <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                                               </div>
                                               <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">WithOut Commission</div>
-                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="WithOutCommision">৳{{$with_out_comission}}</p>
+                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="WithOutCommision">৳{{@$with_out_comission??'0'}} </p>
+                                          </div>
+                                      </div>
+
+
+                                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+
+                                          <div class="doc-block btn-7" style="">
+                                              <div class="doc-icon" style="border: 1px solid #646567;">
+                                                  <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
+                                              </div>
+                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Withdrowan Amount</div>
+                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="">৳@if(@$Approve_request_amount){{@$Approve_request_amount??'0'}}@else 0 @endif</p>
+                                          </div>
+                                      </div>
+
+
+
+                                      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+
+                                          <div class="doc-block btn-8" style="">
+                                              <div class="doc-icon" style="border: 1px solid #646567;">
+                                                  <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
+                                              </div>
+                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Current Balance</div>
+                                              <p style="font-family: cursive;font-size: 23px;color: white;" id="">৳@if(@$Approve_request_amount){{@$with_out_comission-$Approve_request_amount}}@else{{@$with_out_comission??'0'}}@endif</p>
                                           </div>
                                       </div>
 
@@ -235,19 +269,19 @@
                                               <div class="doc-icon" style="border: 1px solid #646567;">
                                                   <img style="height: 94px;width: 88px;" src="{{asset('backend/pending-work.png')}}" alt="Doc Icon" />
                                               </div>
-                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Panding Request</div>
+                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">({{@$panding_request??'0'}}) Panding Request</div>
                                               <p style="font-family: cursive;font-size: 23px;color: white;" id="WithOutCommision"></p>
                                           </div>
                                           </a>
                                       </div>
 
                                       <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                          <a href="">
+                                          <a href="{{route('VandorPanelPaymentWithdrawApprove',[@$shop_id,@$user_id])}}">
                                           <div class="doc-block btn-5" style="">
                                               <div class="doc-icon" style="border: 1px solid #646567;">
                                                   <img style="height: 94px;width: 88px;" src="{{asset('backend/approve.png')}}" alt="Doc Icon" />
                                               </div>
-                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">Approve Request</div>
+                                              <div class="doc-title" style="font-family: cursive;font-size: 19px;margin: 0px;color: white;">({{@$Approve_request??'0'}}) Approve Request</div>
                                               <p style="font-family: cursive;font-size: 23px;color: white;" id="WithOutCommision"></p>
                                           </div>
                                           </a>

@@ -64,9 +64,13 @@
                                 <label class="" style="font-size: 15px">Category</label>
                                 <select name="cat_id" class="form-control" id="cat_id">
                                     <option disabled="" selected="">Select Once</option>
-                                    @foreach($category as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->category_name }}</option>
+                                    @if(@$vandor_category!=null)
+                                    @foreach(@$category as $cat)
+                                        <option value="{{ @$cat->id }}">{{ @$cat->category_name }}</option>
                                     @endforeach
+                                        @else
+
+                                    @endif
                                 </select>
 
                             </div>

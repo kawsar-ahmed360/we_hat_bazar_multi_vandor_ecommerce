@@ -112,10 +112,10 @@
                                                 </div>
                                                 <div class="sale-num">
 
-                                                        <h3>$0565</h3>
+                                                        <h3>0565</h3>
 
 
-                                                    <p>Panding Order</p>
+                                                    <p>Panding Product</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,31 +126,31 @@
                                                 </div>
                                                 <div class="sale-num">
 
-                                                    <h3>$0565</h3>
+                                                    <h3>0565</h3>
 
-                                                    <p>Compled Orders</p>
+                                                    <p>Approve Product</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="info-stats4">
                                                 <div class="info-icon">
-                                                    <i class="icon-shopping-bag1"></i>
+                                                    <i class=""><img style="height: 58px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                                                 </div>
                                                 <div class="sale-num">
-                                                    <h3>$6454</h3>
-                                                    <p>Total Sales</p>
+                                                    <h3>৳6454 <span style="font-size: 15px">Taka</span></h3>
+                                                    <p>Total Sales Amount</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="info-stats4">
                                                 <div class="info-icon">
-                                                    <i class="icon-activity"></i>
+                                                    <i class=""><img style="height: 58px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                                                 </div>
                                                 <div class="sale-num">
-                                                    <h3>65</h3>
-                                                    <p>Total Approve Product</p>
+                                                    <h3>৳65 <span style="font-size: 15px">Taka</span></h3>
+                                                    <p>Commission Amount</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,14 +158,40 @@
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                             <div class="info-stats4">
                                                 <div class="info-icon">
-                                                    <i class="icon-activity"></i>
+                                                    <i class=""><img style="height: 58px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                                                 </div>
                                                 <div class="sale-num">
-                                                    <h3>65</h3>
-                                                    <p>Total Panding Product</p>
+                                                    <h3>৳65 <span style="font-size: 15px">Taka</span></h3>
+                                                    <p>Vandor Amount</p>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="info-stats4">
+                                                <div class="info-icon">
+                                                    <i class=""><img style="height: 58px;" src="{{asset('backend/takas.png')}}" alt=""></i>
+                                                </div>
+                                                <div class="sale-num">
+                                                    <h3>৳65 <span style="font-size: 15px">Taka</span></h3>
+                                                    <p>Withdrawan</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                            <div class="info-stats4">
+                                                <div class="info-icon">
+                                                    <i class=""><img style="height: 58px;" src="{{asset('backend/takas.png')}}" alt=""></i>
+                                                </div>
+                                                <div class="sale-num">
+                                                    <h3>৳65 <span style="font-size: 15px">Taka</span></h3>
+                                                    <p>Current Amount</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <!-- Row end -->
 

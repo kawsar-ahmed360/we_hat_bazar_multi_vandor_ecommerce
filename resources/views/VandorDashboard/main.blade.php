@@ -4,14 +4,33 @@
 
 @section('vandor-content')
 
+    <style>
+        .info-stats4{
+            padding: 3rem !important;
+        }
+        .info-stats4 .info-icon {
+            height: 94px !important;
+            width: 100px !important;
+        }
+
+        .info-stats4 .info-icon i{font-size: 50px}
+
+        .h3Color {
+            font-weight: 400 !important;
+
+        }
+    </style>
+
+
+
     <!-- Row start -->
     <div class="row gutters">
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 
-            <div class="">
+            {{--<div class="">--}}
 
-                <h4 style="text-align: center;text-align: center;font-family: cursive;font-weight: 200;"> <i class="fa fa-arrow-circle-down" style="color: red;"></i> Total Order <i style="color: red;" class="fa fa-arrow-circle-down"></i></h4>
-            </div>
+                {{--<h4 style="text-align: center;text-align: center;font-family: 'Open Sans';font-weight: 200; position: absolute;margin-left: 78px;margin-top: 6px;font-size: 24px;"> <i class="fa fa-arrow-circle-down" style="color: red;font-weight: 600;"></i> Total Order <i style="color: red;font-weight: 600;" class="fa fa-arrow-circle-down"></i></h4>--}}
+            {{--</div>--}}
 
             <div class="info-stats4">
 
@@ -20,57 +39,99 @@
                 </div>
 
                 <div class="sale-num">
-                    <h3>2500</h3>
+                    <h3 class="h3Color">2500</h3>
                     <p>Orders</p>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="">
 
-                <h4 style="text-align: center;text-align: center;font-family: cursive;font-weight: 200;"> <i class="fa fa-arrow-circle-down" style="color: red;"></i> Total Income <i style="color: red;" class="fa fa-arrow-circle-down"></i></h4>
-            </div>
+
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+            {{--<div class="">--}}
+
+                {{--<h4 style="text-align: center;text-align: center;font-family: 'Open Sans';font-weight: 200; position: absolute;margin-left: 78px;margin-top: 6px;font-size: 24px;"> <i class="fa fa-arrow-circle-down" style="color: red;font-weight: 600;"></i> Total Income <i style="color: red;font-weight: 600;" class="fa fa-arrow-circle-down"></i></h4>--}}
+            {{--</div>--}}
             <div class="info-stats4">
                 <div class="info-icon">
-                    <i class="">৳</i>
+                    <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                 </div>
                 <div class="sale-num">
-                    <h3>{{@$total_income}}</h3>
-                    <p>Taka</p>
+                    <h3 class="h3Color">৳{{@$total_income??'0'}}</h3>
+                    <p>Total Income</p>
                 </div>
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+            {{--<div class="">--}}
 
-                <h4 style="text-align: center;text-align: center;font-family: cursive;font-weight: 200;"> <i class="fa fa-arrow-circle-down" style="color: red;"></i> Commission Amount <i style="color: red;" class="fa fa-arrow-circle-down"></i></h4>
-            </div>
+                {{--<h4 style="text-align: center;text-align: center;font-family: 'Open Sans';font-weight: 200; position: absolute;margin-left: 45px;margin-top: 6px;font-size: 24px;"> <i class="fa fa-arrow-circle-down" style="color: red;font-weight: 600;"></i> Commission Amount <i style="color: red;font-weight: 600;" class="fa fa-arrow-circle-down"></i></h4>--}}
+            {{--</div>--}}
             <div class="info-stats4">
                 <div class="info-icon">
-                    <i class="">৳</i>
+                    <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                 </div>
                 <div class="sale-num">
-                    <h3>{{@$comission_price}}</h3>
-                    <p>Taka</p>
+                    <h3 class="h3Color">৳{{@$comission_price??'0'}}</h3>
+                    <p>Commission Amount </p>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
-            <div class="">
 
-                <h4 style="text-align: center;text-align: center;font-family: cursive;font-weight: 200;"> <i class="fa fa-arrow-circle-down" style="color: red;"></i> Vandor Amount <i style="color: red;" class="fa fa-arrow-circle-down"></i></h4>
-            </div>
+
+
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+            {{--<div class="">--}}
+
+                {{--<h4 style="text-align: center;text-align: center;font-family: 'Open Sans';font-weight: 200; position: absolute;margin-left: 76px;margin-top: 6px;font-size: 24px;"> <i class="fa fa-arrow-circle-down" style="color: red;font-weight: 600;"></i> Vandor Amount <i style="color: red;font-weight: 600;" class="fa fa-arrow-circle-down"></i></h4>--}}
+            {{--</div>--}}
             <div class="info-stats4">
                 <div class="info-icon">
-                    <i class="">৳</i>
+                    <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
                 </div>
                 <div class="sale-num">
-                    <h3>{{@$with_out_comission}}</h3>
-                    <p>Taka</p>
+                    <h3 class="h3Color">৳{{@$with_out_comission??'0'}}</h3>
+                    <p>Vandor Amount</p>
                 </div>
             </div>
         </div>
+
+
+
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+            {{--<div class="">--}}
+
+                {{--<h4 style="text-align: center;text-align: center;font-family: 'Open Sans';font-weight: 200; position: absolute;margin-left: 44px;margin-top: 6px;font-size: 24px;"> <i class="fa fa-arrow-circle-down" style="color: red;font-weight: 600;"></i> Withdrawan Amount <i style="color: red;font-weight: 600;" class="fa fa-arrow-circle-down"></i></h4>--}}
+            {{--</div>--}}
+            <div class="info-stats4">
+                <div class="info-icon">
+                    <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
+                </div>
+                <div class="sale-num">
+                    <h3 class="h3Color">৳{{@$with_drown??'0'}}</h3>
+                    <p>Withdrawan Amount</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+            {{--<div class="">--}}
+
+                {{--<h4 style="text-align: center;text-align: center;font-family: 'Open Sans';font-weight: 200; position: absolute;margin-left: 78px;margin-top: 6px;font-size: 24px;"> <i class="fa fa-arrow-circle-down" style="color: red;font-weight: 600;"></i> Current Amount <i style="color: red;font-weight: 600;" class="fa fa-arrow-circle-down"></i></h4>--}}
+            {{--</div>--}}
+            <div class="info-stats4">
+                <div class="info-icon">
+                    <i class=""><img style="height: 70px;width: 69px;" src="{{asset('backend/takas.png')}}" alt=""></i>
+                </div>
+                <div class="sale-num">
+                    <h3 class="h3Color">৳{{(@$with_out_comission??'0')-(@$with_drown??'0')}}</h3>
+                    <p>Current Amount</p>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- Row end -->
 
