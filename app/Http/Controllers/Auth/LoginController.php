@@ -197,7 +197,7 @@ class LoginController extends Controller
         if($request->hasFile('shop_banner')){
             $shopbanner = $request->file('shop_banner');
             $fullshopbanner = time().'.'.$shopbanner->getClientOriginalExtension();
-            Image::make($request->shop_image)->resize(1200,500)->save('upload/Vandor/shop_banner/'.$fullshopbanner);
+            Image::make($request->shop_image)->resize(114,19)->save('upload/Vandor/shop_banner/'.$fullshopbanner);
             $store->shop_banner = $fullshopbanner;
             $store->save();
         }

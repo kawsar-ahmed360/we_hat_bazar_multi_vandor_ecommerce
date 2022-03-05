@@ -163,7 +163,7 @@ class VandorDashboardController extends Controller
             $image_shop_banner = $request->file('shop_banner');
             $fullname_shop_banner = time().'.'.$image_shop_banner->getClientOriginalExtension();
             @unlink('upload/Vandor/shop_banner/'.$update->shop_banner);
-            Image::make($image_shop_banner)->resize(1200,500)->save('upload/Vandor/shop_banner/'.$fullname_shop_banner);
+            Image::make($image_shop_banner)->resize(114,19)->save('upload/Vandor/shop_banner/'.$fullname_shop_banner);
             $update->shop_banner = $fullname_shop_banner;
             $update->save();
         }

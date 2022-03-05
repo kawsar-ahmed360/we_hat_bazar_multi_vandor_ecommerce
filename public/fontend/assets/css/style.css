@@ -2541,9 +2541,14 @@ body .xs-promotion~.header-transparent {
 	backface-visibility: hidden
 }
 
-.xs-product-wraper .xs-product-header {
+/*.xs-product-wraper .xs-product-header {*/
+	/*opacity: 0;*/
+	/*top: 0*/
+/*}*/
+
+.vendor-name .xs-product-header {
 	opacity: 0;
-	top: 0
+	top: 0;
 }
 
 .xs-product-wraper .xs-product-hover-area {
@@ -2564,9 +2569,14 @@ body .xs-promotion~.header-transparent {
 	z-index: 2
 }
 
-.xs-product-wraper:hover .xs-product-header {
+/*.xs-product-wraper:hover .xs-product-header {*/
+	/*top: 20px;*/
+	/*opacity: 1*/
+/*}*/
+
+.vendor-name:hover .xs-product-header {
 	top: 20px;
-	opacity: 1
+	opacity: 1;
 }
 
 .xs-product-wraper:hover .xs-product-hover-area {

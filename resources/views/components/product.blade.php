@@ -170,6 +170,15 @@
 
             @foreach(\App\Models\Admin\ProductManage::where('section_id', 'LIKE', "%$section->id%")->where('status','1')->get() as $product)
             <div class="col-md-6 col-lg-2" style="padding-top: 22px;">
+                <div class="vendor-name">
+
+
+
+                    <!--  -->
+                    <div class="xs-product-header media">
+                        <span class="value" style="background: #f00;color: #fff; padding: 5px;">  {{@$product->shop_name??'unknown'}}  </span>
+                    </div>
+                    <!--  -->
 
                 <div class="product-card">
                     <div class="product-img">
@@ -190,6 +199,7 @@
 
                 </div>
 
+            </div>
             </div>
 
 

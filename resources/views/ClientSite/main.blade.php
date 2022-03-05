@@ -29,6 +29,10 @@
     <x-Product :section="$section" :product="$product" />
 @endsection
 
+@section('Shops')
+    <x-ShopView :allshop="$allshop" />
+@endsection
+
 @section('client-us')
   <x-ClientUs :ourclient="$ourclient" />
 @endsection

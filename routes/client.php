@@ -67,7 +67,6 @@ Route::get('/shop-page-filer-polish',[FontController::class,'ShopPageFilterPolis
 Route::get('/shop-page-filer-price',[FontController::class,'ShopPageFilterPrice'])->name('ShopPageFilterPrice');
 
 //....................Category Shop Fitler Section.................................
-
 Route::get('/category-shop-page-main-category-product',[FontController::class,'CategoryShopPageFilterMainCategoryProduct'])->name('CategoryShopPageFilterMainCategoryProduct');
 Route::get('/category-shop-page-product-price',[FontController::class,'CategoryShopPageFilterProductPrice'])->name('CategoryShopPageFilterProductPrice');
 Route::get('/category-shop-page-product-name',[FontController::class,'CategoryShopPageFilterProductName'])->name('CategoryShopPageFilterProductName');
@@ -75,6 +74,19 @@ Route::get('/category-shop-page-filer-tag',[FontController::class,'CategoryShopP
 Route::get('/category-shop-page-filer-color',[FontController::class,'CategoryShopPageFilterColor'])->name('CategoryShopPageFilterColor');
 Route::get('/category-shop-page-filer-polish',[FontController::class,'CategoryShopPageFilterPolish'])->name('CategoryShopPageFilterPolish');
 Route::get('/category-shop-page-filer-price',[FontController::class,'CategoryShopPageFilterPrice'])->name('CategoryShopPageFilterPrice');
+
+//.................... Shops Fitler Section.................................
+Route::get('/vandor-shop-page/{shop_id}/{user_id}',[FontController::class,'vandorShopPage'])->name('vandorShopPage');
+
+Route::get('/vandor-shop-page-main-vandor-product',[FontController::class,'VandorShopPageFilterMainVandorProduct'])->name('VandorShopPageFilterMainVandorProduct');
+Route::get('/vandor-shop-page-product-price',[FontController::class,'VandorShopPageFilterProductPrice'])->name('VandorShopPageFilterProductPrice');
+Route::get('/vandor-shop-page-product-name',[FontController::class,'VandorShopPageFilterProductName'])->name('VandorShopPageFilterProductName');
+Route::get('/vandor-shop-page-filer-tag',[FontController::class,'VandorShopPageFilterTag'])->name('VandorShopPageFilterTag');
+Route::get('/vandor-shop-page-filer-color',[FontController::class,'VandorShopPageFilterColor'])->name('VandorShopPageFilterColor');
+Route::get('/vandor-shop-page-filer-polish',[FontController::class,'VandorShopPageFilterPolish'])->name('VandorShopPageFilterPolish');
+Route::get('/vandor-shop-page-filer-price',[FontController::class,'VandorShopPageFilterPrice'])->name('VandorShopPageFilterPrice');
+
+
 
 //.............................Customer Review Section ..................
 Route::post('/review-post',[FontController::class,'ReviewPost'])->name('ReviewPost');

@@ -304,6 +304,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
     route::get('SuperAdmin/Vandor/vandor-view-informtaion/{shop_id}',[VandorReviewManageController::class,'VandorViewInformation'])->name('VandorViewInformation');
     route::get('SuperAdmin/Vandor/vandor-view-delete/{shop_id}/{id}',[VandorReviewManageController::class,'VandorViewDelete'])->name('VandorViewDelete');
     route::get('SuperAdmin/Vandor/vandor-status-panding/{shop_id}/{id}',[VandorReviewManageController::class,'VandorStatusPanding'])->name('VandorStatusPanding');
+    route::post('SuperAdmin/Vandor/vandor-status-sequence/{shop_id}/{id}',[VandorReviewManageController::class,'VandorStatusSequence'])->name('VandorStatusSequence');
     route::get('SuperAdmin/Vandor/vandor-admin-approve/{shop_id}',[VandorReviewManageController::class,'VandorAdminApprove'])->name('VandorAdminApprove');
     route::get('SuperAdmin/Vandor/vandor-admin-approve-list',[VandorReviewManageController::class,'VandorAdminApproveList'])->name('VandorAdminApproveList');
 

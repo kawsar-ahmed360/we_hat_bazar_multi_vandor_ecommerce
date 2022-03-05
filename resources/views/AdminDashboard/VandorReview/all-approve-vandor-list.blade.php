@@ -58,6 +58,7 @@
                                     <a style="display: inherit;margin: 5px;border-radius:3px" href="{{route('VandorPanel',@$slider->shop_id)}}" class="btn btn-secondary btn-sm"><i class="fa fa-user"></i> Vandor Panel</a>
                                     {{--<a style="display: inherit;margin: 5px;border-radius:3px" href="" class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i> Details Add</a>--}}
                                     <a style="display: inherit;margin: 5px;border-radius:3px" href="{{route('VandorStatusPanding',[@$slider->shop_id,$slider->id])}}" class="btn btn-warning btn-sm "><i class="fa fa-arrow-down"></i> Panding</a>
+                                    <a style="display: inherit;margin: 5px;border-radius:3px;color:white" data-toggle="modal" data-target="#basicModal{{@$slider->shop_id}}" class="btn btn-secondary btn-sm "><i class="fa fa-arrow-down"></i> Sequence</a>
                                 </div>
                             </div>
                         </td>
@@ -66,10 +67,51 @@
                 @endforeach
 
 
+                {{--href="{{route('VandorStatusSequence',[@$slider->shop_id,$slider->id])}}"--}}
+
+
                 </tbody>
             </table>
         </div>
     </div>
+
+
+    @foreach($vandor as $key=>$slider)
+    <!-- Modal -->
+    <div class="modal fade" id="basicModal{{@$slider->shop_id}}" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="basicModalLabel">Sequence</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{{route('VandorStatusSequence',[@$slider->shop_id,$slider->id])}}" method="post">
+                        @csrf
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Sequence</label>
+                                <input type="text" class="form-control" value="{{@$slider->seq}}" name="seq">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    @endforeach
 
 
 @endsection

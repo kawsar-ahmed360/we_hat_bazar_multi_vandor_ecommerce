@@ -396,17 +396,15 @@
 
                         @endif
 
-                        {{--<div class="color" style="margin-bottom: 13px;">--}}
-                            {{--<h4>Colors:</h4>--}}
+                        <div class="color" style="margin-bottom: 13px;">
+                            <h4>Colors:</h4>
 
 
-                            {{--@foreach(@$color_name as $key=>$color)--}}
-                                {{--<span onclick="image_color('{{@$color->id}}','{{@$product_details->slug}}','{{@$product_details->id}}')"><input--}}
-                                            {{--type="color" style="width: 36px;height: 35px;margin-left: 4px;margin-left: 4px;border-radius: 50%;background:{{@$color->color}};border: 1px solid white;" value="{{@$color->color}}" readonly disabled></span>--}}
-                                {{--<span ><input--}}
-                                            {{--type="hidden" style="" value="{{@$color->color}}" readonly disabled></span>--}}
-                            {{--@endforeach--}}
-                        {{--</div>--}}
+                            @foreach(@$color_name as $key=>$color)
+                                <span onclick="image_color('{{@$color->id}}','{{@$product_details->slug}}','{{@$product_details->id}}')"><input
+                                            type="color" style="width: 36px;height: 35px;margin-left: 4px;margin-left: 4px;border-radius: 50%;background:{{@$color->color}};border: 1px solid white;" value="{{@$color->color}}" readonly disabled></span>
+                            @endforeach
+                        </div>
 
 
                         <div class="xs-add-to-chart-form row">

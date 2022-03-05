@@ -22,6 +22,8 @@ use App\Models\Client\Order;
 use App\Models\Client\OrderDetail;
 use App\Models\Client\Wishlist;
 use App\Models\ColorImageLinkUp;
+use App\Models\Vandor;
+use App\Models\VandorCategoryPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -40,6 +42,7 @@ class FontController extends Controller
         $data['ourclient'] = OurClientThinkOfUs::get();
         $data['meta'] = AllPageSeoTools::where('id','1')->first();
         $data['category']=CategoryManage::get();
+
         return view('ClientSite.main',$data);
     }
 
@@ -1162,6 +1165,7 @@ class FontController extends Controller
     }
 
     public function CategoryShopPage($id){
+
         $id = base64_decode($id);
         $data['categorys'] = CategoryManage::get();
         $data['product'] = ProductManage::where('status','1')->where('cat_id',$id)->get();
@@ -2434,6 +2438,1161 @@ class FontController extends Controller
 
 
     }
+
+
+    //------------------------Vandor Shop Section------------------
+
+     public function vandorShopPage($shop_id,$user_id){
+
+
+          $data['vandor'] = Vandor::where('id',$user_id)->where('shop_id',@$shop_id)->first();
+
+         $data['vandor_category'] = VandorCategoryPermission::where('shop_id',$shop_id)->first();
+             if($data['vandor_category']!=null){
+             $vandor_category = VandorCategoryPermission::where('shop_id',$shop_id)->first()->cat_id;
+             $json = json_decode($vandor_category);
+             $data['vandor_category'] = CategoryManage::whereIn('id',$json)->get();
+         }
+
+         $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+//             dd($data['product']);
+         $data['tags'] = TagManage::get();
+         $data['color'] = ColorManage::get();
+         $data['polish'] = Plating::get();
+         $data['shop_id'] = $shop_id;
+         $data['user_id'] = $user_id;
+         $data['meta'] = AllPageSeoTools::where('id','1')->first();
+         $data['related_product'] = ProductManage::where('status','1')->inRandomOrder()->take(5)->get();
+         $data['category'] = CategoryManage::first();
+
+//         return view('ClientSite.single_page.category_shop',$data);
+         return view('ClientSite.single_page.vandor_shop',$data);
+
+     }
+
+
+    public function VandorShopPageFilterMainVandorProduct(Request $request){
+
+
+        if($request->ProductName==null && @$request->ProductPrice && $request->CcatId){
+            $query = DB::table('product_manages');
+            $query->orwhere('product_price', 'LIKE',"%$request->ProductPrice%")->where('status', '1');
+            $query->orwhere('new_price','LIKE',"%$request->ProductPrice%")->where('status', '1');
+            $query->where('shop_id',$request->shop_id);
+            $query->where('cat_id',$request->CcatId)->where('status', '1');
+            $data['product'] = $query->where('status', '1')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+
+        }elseif(@$request->ProductName && $request->CcatId){
+            $query = DB::table('product_manages');
+            $query->where('shop_id',$request->shop_id);
+            $query->where('cat_id',$request->CcatId)->where('status', '1');
+            $query->where('product_name', 'LIKE', "%$request->ProductName%")->where('status', '1');
+            $data['product'] = $query->where('status', '1')->where('cat_id',$request->CatId)->get();
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+
+        }else{
+            $query = DB::table('product_manages');
+            $query->where('shop_id',$request->shop_id);
+            $query->where('cat_id',$request->CcatId)->where('status', '1');
+            $data['product'] = $query->where('status', '1')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+    }
+
+
+    public function VandorShopPageFilterProductPrice(Request $request){
+
+
+        if(@$request->ProductPrice && $request->CcatId){
+            $query = DB::table('product_manages');
+            $query->orwhere('product_price', 'LIKE',"%$request->ProductPrice%")->where('status', '1');
+            $query->orwhere('new_price','LIKE',"%$request->ProductPrice%")->where('status', '1');
+            $query->where('cat_id',$request->CcatId)->where('status', '1');
+            $query->where('shop_id',$request->shop_id)->where('status', '1');;
+
+            $data['product'] = $query->where('status', '1')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        } else{
+
+            $query = DB::table('product_manages');
+            $query->orwhere('product_price', 'LIKE',"%$request->ProductPrice%")->where('shop_id',$request->shop_id)->where('status', '1');
+            $query->orwhere('new_price','LIKE',"%$request->ProductPrice%")->where('shop_id',$request->shop_id)->where('status', '1');
+            $query->where('shop_id',$request->shop_id)->where('status', '1');
+            $data['product'] = $query->where('status', '1')->where('shop_id',$request->shop_id)->get();
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+    }
+
+
+    public function VandorShopPageFilterProductName(Request $request){
+
+        if(@$request->ProductName && $request->CcatId){
+            $query = DB::table('product_manages');
+            $query->where('product_name', 'LIKE', "%$request->ProductName%")->where('status', '1');
+            $query->where('cat_id',$request->CcatId)->where('status', '1');
+            $query->where('shop_id',$request->shop_id)->where('status', '1');
+
+            $data['product'] = $query->where('status', '1')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+
+        }else{
+            $query = DB::table('product_manages');
+            $query->where('product_name', 'LIKE', "%$request->ProductName%")->where('shop_id',$request->shop_id)->where('status', '1');
+            $query->where('shop_id',$request->shop_id)->where('status', '1');
+            $data['product'] = $query->where('status', '1')->where('shop_id',$request->shop_id)->get();
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+
+
+    }
+
+
+    public function VandorShopPageFilterTag(Request $request){
+        $data['tags'] = TagManage::get();
+        $tag = $request->tag;
+        $price = $request->price;
+        $color = $request->color;
+        $polish = $request->polish;
+        $shop_id = $request->shop_id;
+
+        //..............Polish And Tag And Color && Price Filter.....
+        if($tag && $polish && $color && $price=='Low to High'){
+
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($tag && $polish && $color && $price=='High to Low'){
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($tag && $polish && $color && $price=='Discount (High to Low)'){
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //..............Polish And tag And Color.....
+        elseif($tag && $polish && $color){
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //..............tag And Price And Color.....
+        elseif($tag && $color && $price=='Low to High'){
+
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+
+        }elseif($tag && $color && $price=='High to Low'){
+
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($tag && $color && $price=='Discount (High to Low)'){
+
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //................Tag And Plating........
+        elseif($tag && $polish){
+
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //................Tag And polish........
+        elseif($tag && $color){
+
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //..............tag And Price..........
+        elseif($tag && $price=='Low to High'){
+
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($tag && $price=='High to Low'){
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($tag && $price=='Discount (High to Low)'){
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+
+        else{
+            if (@$tag == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            }else {
+                $query = DB::table('product_manages');
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+    }
+
+
+
+
+    public function VandorShopPageFilterColor(Request $request){
+
+        $data['tags'] = TagManage::get();
+        $data['color'] = ColorManage::get();
+        $price = $request->price;
+        $color = $request->color;
+        $tag = $request->tag;
+        $polish = $request->polish;
+        $shop_id = $request->shop_id;
+
+        //..............Color And Polish And Tag And Price.....
+        if($color && $tag && $polish && $price=='Low to High'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($color && $tag && $polish && $price=='High to Low'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+            //--------------------------Stop Work ---------------------
+            //--------------------------Stop Work ---------------------
+            //--------------------------Stop Work ---------------------
+            //--------------------------Stop Work ---------------------
+        }elseif($color && $tag && $polish && $price=='Discount (High to Low)'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //..............Tag And Polis And Color.....
+        elseif($color && $tag && $polish){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //..............tag And Price And Color.....
+        elseif($color && $tag && $price=='Low to High'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($color && $tag && $price=='High to Low'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($color && $tag && $price=='Discount (High to Low)'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //.............. Color And Polish............
+        elseif($color && $polish){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($polish as $key => $polish2) {
+                    $query->orwhere('plation_id', 'LIKE', "%$polish2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //.............. Color And Tag............
+        elseif($color && $tag){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                foreach ($tag as $key => $tag2) {
+                    $query->orwhere('tag_id', 'LIKE', "%$tag2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+        //.............. Price And Color............
+        elseif($color && $price=='Low to High'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($color && $price=='High to Low'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }elseif($color && $price=='Discount (High to Low)'){
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }else{
+
+            if (@$color == null) {
+                $data['product'] = ProductManage::where('status', '1')->where('shop_id',$shop_id)->get();
+            } else {
+                $query = DB::table('product_manages');
+                foreach ($color as $key => $color2) {
+                    $query->orwhere('color_id', 'LIKE', "%$color2%")->where('shop_id',$shop_id)->where('status', '1');
+                }
+                $data['product'] = $query->where('status', '1')->where('shop_id',$shop_id)->get();
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops', $data);
+        }
+    }
+
+
+
+
+    public function VandorShopPageFilterPolish(Request $request){
+
+        $data['tags'] = TagManage::get();
+        $data['color'] = ColorManage::get();
+        $price = $request->price;
+        $color = $request->color;
+        $tag = $request->tag;
+        $polish = $request->polish;
+        $shop_id = $request->shop_id;
+
+
+        //..............Polish And Tag And Color And Price.....
+        if($polish && $tag && $color && $price=='Low to High'){
+
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                foreach($color as $key=>$color2){
+                    $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+
+                foreach($tag as $key=>$tag2){
+                    $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $tag && $color && $price=='High to Low'){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+
+                foreach($color as $key=>$color2){
+                    $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+
+                foreach($tag as $key=>$tag2){
+                    $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $tag && $color && $price=='Discount (High to Low)'){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                foreach($color as $key=>$color2){
+                    $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                foreach($tag as $key=>$tag2){
+                    $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..............Polish And Tag And Color.....
+        elseif($polish && $tag && $color){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                foreach($color as $key=>$color2){
+                    $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+
+                foreach($tag as $key=>$tag2){
+                    $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..............Polish And Price And Color.....
+        elseif($polish && $price=='Low to High' && $color){
+
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                foreach($color as $key=>$color2){
+                    $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+
+        }elseif($polish && $price=='High to Low' && $color){
+
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+
+                foreach($color as $key=>$color2){
+                    $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+
+        }elseif($polish && $price=='Discount (High to Low)' && $color){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                foreach($color as $key=>$color2){
+                    $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+
+        //..............Polish And Color.....
+
+        elseif($polish && $color){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                foreach($color as $key=>$color2){
+                    $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+
+        //..............Polish And Tag.....
+        elseif($polish && $tag){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                foreach($tag as $key=>$tag2){
+                    $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..............Polish And Price .....
+
+        elseif($polish && $price=='Low to High'){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortBy('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+
+        }elseif($polish && $price=='High to Low'){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $price=='Discount (High to Low)'){
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+                $collection = collect($data['product']);
+                $data['product'] = $collection->sortByDesc('product_price');
+            }
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        } else{
+
+            if(@$polish==null){
+                $data['product'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            }else{
+                $query = DB::table('product_manages');
+                foreach($polish as $key=>$polish2){
+                    $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+                }
+                $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            }
+
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+    }
+
+
+
+
+    public function VandorShopPageFilterPrice(Request $request){
+
+        $name = $request->namees;
+        $tag = $request->tag;
+        $color = $request->color;
+        $polish = $request->polish;
+        $shop_id = $request->shop_id;
+
+        //..................Name && Tag && $color && Polish...............
+        if($color && $tag && $polish && $name=='Low to High'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortBy('product_price');
+
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($color && $tag && $polish && $name=='High to Low'){
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($color && $tag && $polish && $name=='Discount (High to Low)'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..................Name && Tag && $color...............
+        elseif($color && $tag && $name=='Low to High'){
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortBy('product_price');
+
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($color && $tag && $name=='High to Low'){
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($color && $tag && $name=='Discount (High to Low)'){
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..................Name && Tag && Polish...............
+        elseif($polish && $tag && $name=='Low to High'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortBy('product_price');
+
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $tag && $name=='High to Low'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $tag && $name=='Discount (High to Low)'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->whereNotNull('discount')->where('status','1');
+            }
+
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..................Plish And Low TO Hight Section Start...............
+        elseif($polish && $name=='Low to High'){
+
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortBy('product_price');
+
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $name=='High to Low'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $name=='Relevance'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->OrderBy('id','desc')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $name=='Name (A to Z)'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->where('product_name','REGEXP', '[a-z]')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($polish && $name=='Discount (High to Low)'){
+            $query = DB::table('product_manages');
+            foreach($polish as $key=>$polish2){
+                $query->orwhere('plation_id','LIKE',"%$polish2%")->where('shop_id',$shop_id)->whereNotNull('discount')->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..................Color And Low TO Hight Section Start...............
+        elseif($color && $name=='Low to High'){
+
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortBy('product_price');
+
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($color && $name=='High to Low'){
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($color && $name=='Relevance'){
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$colo2){
+                $query->orwhere('color_id','LIKE',"%$colo2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->OrderBy('id','desc')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($color && $name=='Name (A to Z)'){
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->where('product_name','REGEXP', '[a-z]')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($color && $name=='Discount (High to Low)'){
+            $query = DB::table('product_manages');
+            foreach($color as $key=>$color2){
+                $query->orwhere('color_id','LIKE',"%$color2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..................Tag And Low TO Hight Section Start.................
+        elseif($tag && $name=='Low to High'){
+
+            $query = DB::table('product_manages');
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortBy('product_price');
+
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($tag && $name=='High to Low'){
+            $query = DB::table('product_manages');
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($tag && $name=='Relevance'){
+            $query = DB::table('product_manages');
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->OrderBy('id','desc')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($tag && $name=='Name (A to Z)'){
+            $query = DB::table('product_manages');
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->where('product_name','REGEXP', '[a-z]')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($tag && $name=='Discount (High to Low)'){
+            $query = DB::table('product_manages');
+            foreach($tag as $key=>$tag2){
+                $query->orwhere('tag_id','LIKE',"%$tag2%")->where('shop_id',$shop_id)->where('status','1');
+            }
+            $data['product']= $query->where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+            $collection = collect($data['product']);
+            $data['product'] = $collection->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+        //..................Single Section Start.................
+        elseif($name=='Relevance'){
+            $data['product'] = ProductManage::OrderBy('id','desc')->where('shop_id',$shop_id)->where('status','1')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($name=='Low to High'){
+            $data['products'] = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            $collection = collect($data['products']);
+            $data['product'] = $collection->sortBy('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($name=='High to Low'){
+            $products_high = ProductManage::where('status','1')->where('shop_id',$shop_id)->get();
+            $collection_high = collect($products_high);
+            $data['product'] = $collection_high->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($name=='Discount (High to Low)'){
+            $products_high = ProductManage::where('status','1')->where('shop_id',$shop_id)->whereNotNull('discount')->get();
+            $collection_high = collect($products_high);
+            $data['product'] = $collection_high->sortByDesc('product_price');
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }elseif($name=='Name (A to Z)'){
+            $data['product'] = ProductManage::where('product_name','REGEXP', '[a-z]')->where('shop_id',$shop_id)->where('status','1')->get();
+            return view('ClientSite.single_page.Filter.vandor_shops',$data);
+        }
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

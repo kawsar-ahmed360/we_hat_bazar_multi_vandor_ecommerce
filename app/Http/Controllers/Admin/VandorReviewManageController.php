@@ -167,6 +167,8 @@ class VandorReviewManageController extends Controller
             'shop_id'=>'required',
         ]);
 
+        $shop_name = Vandor::where('shop_id',$request->shop_id)->first();
+
         $store = new Admin\ProductManage();
         $store->product_name = $request->product_name;
         $store->section_id = json_encode($request->section_id);
@@ -185,6 +187,7 @@ class VandorReviewManageController extends Controller
         $store->commission = $request->commission;
         $store->inc_commission_price = $request->inc_commission_price;
         $store->shop_id = $request->shop_id;
+        $store->shop_name = $shop_name->shop_name;
         $store->status = 2;
         $store->save();
 
@@ -268,7 +271,7 @@ class VandorReviewManageController extends Controller
             'inc_commission_price'=>'required',
             'shop_id'=>'required',
         ]);
-
+        $shop_name = Vandor::where('shop_id',$request->shop_id)->first();
         $store = Admin\ProductManage::where('id',$request->EditeId)->first();
         $store->product_name = $request->product_name;
         $store->section_id = json_encode($request->section_id);
@@ -287,6 +290,7 @@ class VandorReviewManageController extends Controller
         $store->commission = $request->commission;
         $store->inc_commission_price = $request->inc_commission_price;
         $store->shop_id = $request->shop_id;
+        $store->shop_name = $shop_name->shop_name;
         $store->status = 2;
         $store->save();
 
@@ -455,6 +459,16 @@ class VandorReviewManageController extends Controller
 
         $status = Vandor::where('id',$id)->where('shop_id',$shop_id)->first();
         $status->super_admin_status =0;
+        $status->save();
+
+        return redirect()->back();
+    }
+
+    //---------------Vandor Sequence --------------
+
+    public function VandorStatusSequence(Request $request,$shop_id,$id){
+        $status = Vandor::where('id',$id)->where('shop_id',$shop_id)->first();
+        $status->seq =$request->seq;
         $status->save();
 
         return redirect()->back();

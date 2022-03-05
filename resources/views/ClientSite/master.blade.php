@@ -119,6 +119,8 @@
 
 @yield('category_section')
 
+@yield('Shops')
+
 {{--@yield('client-content')--}}
 
 {{--@yield('content')--}}

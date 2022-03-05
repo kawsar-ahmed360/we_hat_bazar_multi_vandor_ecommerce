@@ -1,5 +1,5 @@
 @extends('ClientSite.master')
-@section('title'){{@$category->category_name}} Shop Page @endsection
+@section('title') {{@$vandor->shop_name??'unknown'}} Shop Page @endsection
 @section('seo')
     <meta name="description" content="{!!@$meta->shop_meta_des!!}">
     <meta name="keywords" content="{!!@$meta->shop_meta_des!!}">
@@ -13,11 +13,41 @@
     <div class="xs-breadcumb">
         <div class="container">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('MainIndex')}}"> Home</a></li>
-                    <li class="breadcrumb-item"><a href="">{{@$category->category_name}} Shop</a></li>
+                <div class="row">
+                <div class="col-md-2">
+                <img style="border: 1px solid #8b02ff;padding:15px;border-radius: 4px;height: 59px" src="{{(@$vandor->shop_image)?url('upload/Vandor/shop_image/'.@$vandor->shop_image):url('backend/vandor_unk.png')}}" alt="">
 
-                </ol>
+                </div>
+                    <div class="col-md-2">
+
+                        <span style="color: black;font-size: 21px;font-family: monospace;">Vandor Name</span>
+                        <p style="color:red"><img style="height: 17px;" src="{{(@$vandor->shop_banner)?url('upload/Vandor/shop_banner/'.@$vandor->shop_banner):url('backend/vandor_unk.png')}}" alt=""></p>
+                    </div>
+
+                    <div class="col-md-8">
+                         <span><strong style="font-family: inherit;font-size:19px;font-weight: 500;"> <i class="fa fa-mobile"></i> :</strong> 01843534534</span>    <span><strong style="font-family: inherit;font-size:19px;font-weight: 500;">  <i style="padding-left: 18px;" class="fa fa-envelope"></i> :</strong> Vandor@gmail.com</span>
+                        <span><strong style="font-family: inherit;font-size:19px;font-weight: 500;">  <i style="padding-left: 18px;" class="fa fa-map"></i> :</strong> Dhaka Bangladesh</span>
+
+                        <br>
+                        <p>নাসিমা আক্তার নিশা, ফেসবুক গ্রুপ উই (উইমেন অ্যান্ড ই-কমার্স ফোরাম) এর স্বপ্নদ্রস্টা ও প্রতিষ্ঠাতা। বর্তমানে তিনি উই’র প্রেসিডেন্ট। এছাড়া ই-ক্যাবের (ই-কমার্স অ্যাসোসিয়েশন অব বাংলাদেশ) যুগ্ম সাধারণ সম্পাদকের দায়িত্ব পালন করেছেন।</p>
+                    </div>
+
+
+
+
+
+
+                    <div class="col-md-3">
+
+                    </div>
+
+
+
+
+                </div>
+
+
+
             </nav>
         </div>
     </div>
@@ -27,18 +57,23 @@
     <!--------Category Section Start---------->
 
 
-    <section class="xs-section-padding">
+    <section class="xs-section-padding" style="padding: 32px 0;">
         <div class="container">
             <div class="row">
+
+
                 <div class="col-md-3 col-lg-3">
                     <div class="shop-category">
                         <div class="widget widget_cate">
                             <h5 class="widget-title">BASIC FILTER</h5>
                             <select class="form-control" onchange="CatCategoryFilter()" id="CcatId">
                                 <option disabled selected>--Select Category--</option>
-                                @foreach(@$categorys as $cat)
+                                @if(@$vandor_category!=null)
+                                @foreach(@$vandor_category as $cat)
                                     <option value="{{@$cat->id}}">{{@$cat->category_name}}</option>
                                 @endforeach
+                                    @else
+                                @endif
                             </select>
                             <h6 style="margin-top:7px;font-family: cursive;color: #919090;">OR</h6>
                             <input style="margin-top:5px"  type="text" onkeyup="CatProductName()" class="form-control" id="productName" placeholder="Enter Product Name">
@@ -88,7 +123,7 @@
 
 
                         <div class="widget widget_banner">
-                            <img src="assets/images/image_loader.gif" data-echo="assets/images/web_banner/shop_offer_banner.png" alt="">
+                            <img src="{{asset('fontend/assets/images/image_loader.gif')}}" data-echo="assets/images/web_banner/shop_offer_banner.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -131,7 +166,7 @@
                         <div class="tab-pane fade show active" id="list-th" role="tabpanel" aria-labelledby="list-th-tab">
                             <div class="row category-v4" id="newproduct">
 
-                                @include('ClientSite.single_page.Filter.category_shop')
+                                @include('ClientSite.single_page.Filter.vandor_shops')
 
                             </div>
                         </div>
@@ -144,7 +179,7 @@
         </div>
     </section>
 
-    <input type="hidden" value="{{@$cat_id}}" id="CatId">
+    <input type="hidden" value="{{@$shop_id}}" id="shopId">
 
 @section('client-footer')
 
@@ -165,11 +200,11 @@
             var CcatId = $('#CcatId').val();
             var ProductName = $('#productName').val();
             var ProductPrice = $('#productPrice').val();
-            var CatId = $('#CatId').val();
+            var shop_id = $('#shopId').val();
             $.ajax({
-                url:"{{route('CategoryShopPageFilterMainCategoryProduct')}}",
+                url:"{{route('VandorShopPageFilterMainVandorProduct')}}",
                 type:"GET",
-                data:{CcatId:CcatId,ProductName:ProductName,ProductPrice:ProductPrice,CatId:CatId},
+                data:{CcatId:CcatId,ProductName:ProductName,ProductPrice:ProductPrice,shop_id:shop_id},
                 success:function (data) {
                     $('#newproduct').empty().html(data)
                 }
@@ -182,12 +217,12 @@
     <script>
         function CatProductPrice(){
             var ProductPrice = $('#productPrice').val();
-            var CatId = $('#CatId').val();
+            var shop_id = $('#shopId').val();
             var CcatId = $('#CcatId').val();
             $.ajax({
-                url:"{{route('CategoryShopPageFilterProductPrice')}}",
+                url:"{{route('VandorShopPageFilterProductPrice')}}",
                 type:"GET",
-                data:{ProductPrice:ProductPrice,CatId:CatId,CcatId:CcatId},
+                data:{ProductPrice:ProductPrice,shop_id:shop_id,CcatId:CcatId},
                 success:function (data) {
                     $('#newproduct').empty().html(data)
                 }
@@ -198,13 +233,13 @@
 
     <script>
         function CatProductName(){
-            var CatId = $('#CatId').val();
+            var shop_id = $('#shopId').val();
             var ProductName = $('#productName').val();
             var CcatId = $('#CcatId').val();
             $.ajax({
-                url:"{{route('CategoryShopPageFilterProductName')}}",
+                url:"{{route('VandorShopPageFilterProductName')}}",
                 type:"GET",
-                data:{ProductName:ProductName,CatId:CatId,CcatId:CcatId},
+                data:{ProductName:ProductName,shop_id:shop_id,CcatId:CcatId},
                 success:function (data) {
                     $('#newproduct').empty().html(data)
                 }
@@ -226,16 +261,16 @@
             });
 
             var price = $('#price_filter').val();
-            var CatId = $('#CatId').val();
+            var shop_id = $('#shopId').val();
 
             $.ajax({
 
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 type:'GET',
 
-                url: '{{route("CategoryShopPageFilterTag")}}',
+                url: '{{route("VandorShopPageFilterTag")}}',
 
-                data:{tag:tag,price:price,color:color,polish:polish,CatId:CatId},
+                data:{tag:tag,price:price,color:color,polish:polish,shop_id:shop_id},
 
                 success:function(data){
 
@@ -277,16 +312,16 @@
             });
 
             var price = $('#price_filter').val();
-            var CatId = $('#CatId').val();
+            var shop_id = $('#shopId').val();
 
             $.ajax({
 
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 type:'GET',
 
-                url: '{{route("CategoryShopPageFilterColor")}}',
+                url: '{{route("VandorShopPageFilterColor")}}',
 
-                data:{color:color,price:price,tag:tag,polish:polish,CatId:CatId},
+                data:{color:color,price:price,tag:tag,polish:polish,shop_id:shop_id},
 
                 success:function(data){
 
@@ -330,15 +365,15 @@
             });
 
             var price = $('#price_filter').val();
-            var CatId = $('#CatId').val();
+            var shop_id = $('#shopId').val();
             $.ajax({
 
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 type:'GET',
 
-                url: '{{route("CategoryShopPageFilterPolish")}}',
+                url: '{{route("VandorShopPageFilterPolish")}}',
 
-                data:{polish:polish,price:price,color:color,tag:tag,CatId:CatId},
+                data:{polish:polish,price:price,color:color,tag:tag,shop_id:shop_id},
 
                 success:function(data){
 
@@ -375,12 +410,12 @@
 
         function filterPrice(name){
             var namees = name.value;
-            var CatId = $('#CatId').val();
+            var shop_id = $('#shopId').val();
 
             $.ajax({
-                url:"{{route('CategoryShopPageFilterPrice')}}",
+                url:"{{route('VandorShopPageFilterPrice')}}",
                 type:"GET",
-                data:{namees:namees,tag:tag,color:color,polish:polish,CatId:CatId},
+                data:{namees:namees,tag:tag,color:color,polish:polish,shop_id:shop_id},
                 success:function (data) {
                     $('#newproduct').empty().html(data)
                 }

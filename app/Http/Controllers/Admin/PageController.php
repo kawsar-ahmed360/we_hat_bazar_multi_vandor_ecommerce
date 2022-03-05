@@ -179,7 +179,10 @@ class PageController extends Controller
         $data['main']   =   Menu::orderBy('sequence','ASC')
             ->where('display',1)
             ->get();
-        $data['info'] = Admin::where('id',Auth::guard('admin')->user()->id)->first();
+
+        $data['category']=Admin\CategoryManage::get();
+
+//         $data['info'] = Admin::where('id',Auth::guard('admin')->user()->id)->first();
          $data['information'] = Menu::orderBy('sequence','ASC')->where('important_link','important_link')->get();
          $data['MyAccount'] = Menu::orderBy('sequence','ASC')->where('my_account','my_account')->get();
          $data['CustomerSer'] = Menu::orderBy('sequence','ASC')->where('customer_service','customer_service')->get();

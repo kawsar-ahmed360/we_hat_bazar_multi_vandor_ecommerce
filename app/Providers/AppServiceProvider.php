@@ -8,6 +8,7 @@ use App\Models\Admin\LogoManage;
 use App\Models\Admin\Menu;
 use App\Models\Admin\SocialIcon;
 use App\Models\Client\CustomerRegistration;
+use App\Models\Vandor;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -32,8 +33,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         View::composer('*', function ($view) {
             $view->with('Logo', LogoManage::where('id','1')->first());
+            $view->with('allshop', Vandor::OrderBy('seq','asc')->get());
             $view->with('ContactInfo', ContactInfo::where('id','1')->first());
             $view->with('main', Menu::orderBy('sequence','ASC')->where('display',1)->get());
             $view->with('information', Menu::orderBy('sequence','ASC')->where('important_link','important_link')->get());

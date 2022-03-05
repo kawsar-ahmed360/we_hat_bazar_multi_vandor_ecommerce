@@ -40,4 +40,26 @@
             </div>
         </div>
     </section>
+
+
+@section('client-footer')
+
+
+
+        <script>
+            $('.v-gray').on('click',function () {
+
+                $('.too').toggle('dropdown-is-active');
+                $('.too').css({
+                    "z-index":"9999",
+                    "display":"block",
+                })
+
+            });
+
+
+
+        </script>
+
+    @endsection
     @endsection
